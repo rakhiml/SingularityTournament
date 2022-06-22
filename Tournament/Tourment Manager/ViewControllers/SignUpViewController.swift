@@ -32,9 +32,6 @@ class SignUpViewController: UIViewController {
         setUpElements()
     }
     
-    @IBAction func signButtonTapped(_ sender: UIButton) {
-    }
-    
     func setUpElements() {
         
         errorLabel.alpha = 0
@@ -46,5 +43,30 @@ class SignUpViewController: UIViewController {
 //        Utilities.styleTextField(checkPasswordTextField)
         Utilities.styleFilledButton(signUpButton)
     }
+    
+    func validateField() -> String? {
+        
+        if loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            checkPasswordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            return "Please fill in all fields."
+        }
+        
+        let cleanedPassword = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if Utilities.isPasswordValid(cleanedPassword) == false {
+            return ""
+        }
+        
+        return nil
+    }
+    
+    @IBAction func signButtonTapped(_ sender: UIButton) {
+        
+    }
+    
+    
     
 }
