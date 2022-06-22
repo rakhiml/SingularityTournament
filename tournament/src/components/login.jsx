@@ -30,6 +30,7 @@ export default function Login() {
                     method: "POST",
                     body: JSON.stringify(values, null, 2),
                     headers: {
+                      "Access-Control-Allow-Origin": "http://localhost:8189",
                       "Content-Type": "application/json",
                       Accept: "application/json",
                     },
