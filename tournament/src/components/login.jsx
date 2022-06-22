@@ -72,10 +72,14 @@ export default function Login() {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
-                  <Button type="submit" colorScheme="purple" width="full">
+                  <Button type="submit" colorScheme="orange" width="full">
                     Login
                   </Button>
-                  <a href="/registration">SIGN UP</a>
+                  <a href="/registration">
+                    <Button colorScheme="blue" width="full">
+                      Sign up
+                    </Button>
+                  </a>
                 </VStack>
               </form>
             )}

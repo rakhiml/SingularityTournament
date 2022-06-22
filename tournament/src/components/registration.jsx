@@ -63,7 +63,7 @@ export default function Registration() {
                     <FormErrorMessage>{errors.name}</FormErrorMessage>
                   </FormControl>
                   <FormControl isInvalid={!!errors.surname && touched.surname}>
-                    <FormLabel htmlFor="surname">surname</FormLabel>
+                    <FormLabel htmlFor="surname">Surname</FormLabel>
                     <Field
                       as={Input}
                       id="surname"
@@ -83,12 +83,14 @@ export default function Registration() {
                     <FormErrorMessage>{errors.surname}</FormErrorMessage>
                   </FormControl>
                   <SelectControl
-                    name="select"
-                    selectProps={{ placeholder: "Select option" }}
+                    name="major"
+                    selectProps={{ placeholder: "Select major" }}
                   >
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                    <option value="Frontend">Frontend</option>
+                    <option value="Backend">Backend</option>
+                    <option value="IOS">IOS</option>
+                    <option value="Android">Android</option>
+                    <option value="DevOps">DevOps</option>
                   </SelectControl>
                   {/* <FormControl isInvalid={!!errors.major && touched.major}>
                     <FormLabel htmlFor="major">major</FormLabel>
@@ -132,7 +134,7 @@ export default function Registration() {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
-                  <Button type="submit" colorScheme="purple" width="full">
+                  <Button type="submit" colorScheme="orange" width="full">
                     SIGN UP
                   </Button>
                 </VStack>
