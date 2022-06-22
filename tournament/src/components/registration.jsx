@@ -25,8 +25,24 @@ export default function Registration() {
               major: "",
               password: "",
             }}
-            onSubmit={(values) => {
-              alert(JSON.stringify(values, null, 2));
+            onSubmit={async (values) => {
+              try {
+                const req = await fetch(
+                  "http://localhost:8189/api/v1/app/register",
+                  {
+                    method: "POST",
+                    body: JSON.stringify(values, null, 2),
+                    headers: {
+                      "Content-Type": "application/json",
+                      Accept: "application/json",
+                    },
+                  }
+                );
+                const reqJ = await req.json();
+                console.log(reqJ);
+              } catch (error) {
+                console.log(error);
+              }
             }}
           >
             {({ handleSubmit, errors, touched }) => (

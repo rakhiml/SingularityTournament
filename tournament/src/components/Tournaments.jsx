@@ -63,3 +63,6 @@ export default function Tournaments() {
 
   return <div className="tournamentInfo">No active tournaments</div>;
 }
+
+// http://localhost:8189/api/v1/app/auth
+// http://localhost:8189/api/v1/app/register

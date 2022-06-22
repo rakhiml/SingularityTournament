@@ -1,5 +1,5 @@
+import CreateTournament from "./components/CreateTournament";
 import Header from "./components/header";
-import Login from "./components/login";
 import Tournaments from "./components/Tournaments";
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
       <div className="mainPageTitle">
         <h2>Tournaments</h2>
       </div>
+      <CreateTournament />
       <Tournaments />
     </div>
   );
