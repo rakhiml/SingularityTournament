@@ -10,7 +10,7 @@ create TABLE users
     surname VARCHAR(255)  NOT NULL,
     major VARCHAR(255)  NOT NULL,
     password VARCHAR(255) NOT NULL,
-    tournament_id INTEGER
+    tournament_id BIGINT
 
 );
 
@@ -19,8 +19,18 @@ create TABLE tournaments
     id BIGSERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
-    user_id INTEGER
+    user_id BIGINT
 
+);
+
+create table tournament_status
+(
+    id BIGSERIAL NOT NULL primary key,
+    tournament_id INTEGER,
+    score integer[],
+    user_id BIGINT,
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
 );
 
 
