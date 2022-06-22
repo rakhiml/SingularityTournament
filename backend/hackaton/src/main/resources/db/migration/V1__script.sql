@@ -19,6 +19,10 @@ create TABLE tournaments
     id BIGSERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    created_date date not null,
+    started_date date,
+    finished_date date,
     user_id BIGINT
 
 );
@@ -30,7 +34,7 @@ create table tournament_status
     score integer[],
     user_id BIGINT,
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
-    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 

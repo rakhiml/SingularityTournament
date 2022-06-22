@@ -1,5 +1,6 @@
 package kz.hackaton.tournament.controllers;
 
+import kz.hackaton.tournament.dto.CreateTournamentDto;
 import kz.hackaton.tournament.responses.ResponseMessage;
 import kz.hackaton.tournament.services.TournamentService;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +17,16 @@ public class TournamentController {
 
     private final TournamentService tournamentService;
 
-    @PostMapping("/join")
-    public ResponseEntity<ResponseMessage> joinTourney(Principal principal) {
-        System.out.println(principal.getName());
-        tournamentService.joinTourney(principal.getName());
+    @PostMapping("/join/{tour_id}")
+    public ResponseEntity<ResponseMessage> joinTourney(Principal principal,@PathVariable(name = "tour_id") Long id) {
+        tournamentService.joinTourney(principal.getName(), id);
         return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseMessage> createTourney(@RequestBody Principal principal) {
-        System.out.println(principal.getName());
-        tournamentService.joinTourney(principal.getName());
+    public ResponseEntity<ResponseMessage> createTourney(@RequestBody CreateTournamentDto createTournamentDto, Principal principal) {
+
+        tournamentService.registerTourney(createTournamentDto);
         return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
     }
 }
