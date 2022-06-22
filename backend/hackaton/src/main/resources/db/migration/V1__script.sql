@@ -1,10 +1,17 @@
+drop table if exists users;
+drop table if exists tournaments;
+drop table if exists users_roles;
+drop table if exists roles;
 create TABLE users
 (
     id BIGSERIAL NOT NULL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
+    login VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255)  NOT NULL,
+    surname VARCHAR(255)  NOT NULL,
+    major VARCHAR(255)  NOT NULL,
     password VARCHAR(255) NOT NULL,
-    tournament_id INTEGER NOT NULL
---     FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
+    tournament_id INTEGER
+
 );
 
 create TABLE tournaments
@@ -12,12 +19,27 @@ create TABLE tournaments
     id BIGSERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
-    user_id INTEGER NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    user_id INTEGER
+
 );
 
-ALTER TABLE users
-    ADD CONSTRAINT fk_users FOREIGN KEY (tournament_id) REFERENCES tournaments (id);
+
+create table roles
+(
+    id   INTEGER     NOT NULL PRIMARY KEY,
+    name VARCHAR(80) not null
+);
+
+create table users_roles
+(
+    user_id bigint not null,
+    role_id integer not null,
+    primary key (user_id, role_id),
+    foreign key (user_id) references users (id),
+    foreign key (role_id) references roles (id)
+
+);
+
 
 
 create table tournaments_users

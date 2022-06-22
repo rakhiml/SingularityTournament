@@ -21,7 +21,8 @@ public class TournamentController {
 
     @PostMapping("/join")
     public ResponseEntity<ResponseMessage> joinTourney(Principal principal) {
+        System.out.println(principal.getName());
         tournamentService.joinTourney(principal.getName());
-        return new ResponseEntity<>(ResponseMessage.builder().code(200).message("Succesfully added").build(), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
     }
 }
