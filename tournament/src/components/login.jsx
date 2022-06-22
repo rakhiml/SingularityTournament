@@ -80,8 +80,8 @@ export default function Login() {
                       validate={(value) => {
                         let error;
 
-                        if (value.length < 2) {
-                          error = "Password must contain at least 6 characters";
+                        if (value.length < 3) {
+                          error = "Password must contain at least 3 characters";
                         }
 
                         return error;

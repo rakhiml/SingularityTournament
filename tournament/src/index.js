@@ -7,6 +7,7 @@ import NotFoundPage from "./components/NotFoundPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/login";
 import Registration from "./components/registration";
+import CreateTournamentPage from "./components/createTournamentPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,6 +18,7 @@ root.render(
         <Route path="*" exact={true} element={<NotFoundPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
+        <Route path="/createTournament" element={<CreateTournamentPage />} />
       </Routes>
     </Router>
   </React.StrictMode>
