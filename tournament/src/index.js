@@ -6,6 +6,7 @@ import App from "./App";
 import NotFoundPage from "./components/NotFoundPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/login";
+import Registration from "./components/registration";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<App />}></Route>
         <Route path="*" exact={true} element={<NotFoundPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registration" element={<Registration />} />
       </Routes>
     </Router>
   </React.StrictMode>

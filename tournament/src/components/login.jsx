@@ -19,9 +19,8 @@ export default function Login() {
         <Box bg="white" p={6} rounded="md" w={64}>
           <Formik
             initialValues={{
-              email: "",
+              login: "",
               password: "",
-              rememberMe: false,
             }}
             onSubmit={(values) => {
               alert(JSON.stringify(values, null, 2));
@@ -30,27 +29,26 @@ export default function Login() {
             {({ handleSubmit, errors, touched }) => (
               <form onSubmit={handleSubmit}>
                 <VStack spacing={4} align="flex-start">
+                  {/* <FormControl isInvalid={!!errors.name && touched.name}> */}
                   <FormControl>
-                    <FormLabel htmlFor="text">
-                      Lastname Surname (cyrillic)
-                    </FormLabel>
+                    <FormLabel htmlFor="text">Login</FormLabel>
                     <Field
                       as={Input}
-                      id="name"
-                      name="name"
-                      type="name"
+                      id="login"
+                      name="login"
+                      type="login"
                       variant="filled"
-                      validate={(value) => {
-                        let error;
+                      //   validate={(value) => {
+                      //     let error;
+                      //     const logRegex = /[а-яА-Я]$/i;
+                      //     if (!logRegex.test(value)) {
+                      //       error = "Фамилия Имя (только на киррилице!)";
+                      //     }
 
-                        const loginRegx = [а - яА - Я] / i;
-                        if (!loginRegx.test(value))
-                          error = "Только кириллица !";
-
-                        return error;
-                      }}
+                      //     return error;
+                      //   }}
                     />
-                    <FormErrorMessage>{errors.password}</FormErrorMessage>
+                    {/* <FormErrorMessage>{errors.name}</FormErrorMessage> */}
                   </FormControl>
                   <FormControl
                     isInvalid={!!errors.password && touched.password}
@@ -74,10 +72,10 @@ export default function Login() {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
-
                   <Button type="submit" colorScheme="purple" width="full">
                     Login
                   </Button>
+                  <a href="/registration">SIGN UP</a>
                 </VStack>
               </form>
             )}
