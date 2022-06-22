@@ -73,3 +73,51 @@ code {
 .BodyImage > img {
   margin: 0 auto;
 }
+
+.mainPageTitle {
+  display: flex;
+  width: 100%;
+  height: 150px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  align-items: center;
+}
+
+.mainPageTitle > h2 {
+  margin: 0 auto;
+}
+.tournamentList {
+  display: flex;
+}
+
+.tournamentInfo {
+  width: 70%;
+  box-shadow: 3px 5px 14px black;
+  border-radius: 10px;
+  margin: 40px auto;
+  padding: 20px;
+}
+.tournamentName {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.tournamentDescription {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.tournamentPlayers {
+  /* text-align: center; */
+  align-items: center;
+  /* justify-content: center; */
+  display: flex;
+}
+
+/* .tournamentPlayers::before {
+  content: url("https://png.pngtree.com/png-vector/20191017/ourlarge/pngtree-gamepad-icon-png-image_1821905.jpg");
+  width: 10px;
+} */

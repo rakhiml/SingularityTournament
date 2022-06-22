@@ -1,4 +1,6 @@
 import Header from "./components/header";
+import Login from "./components/login";
+import Tournaments from "./components/Tournaments";
 
 function App() {
   return (
@@ -12,7 +14,10 @@ function App() {
         />
       </div>
 
-      <div className="text">lalalala</div>
+      <div className="mainPageTitle">
+        <h2>Tournaments</h2>
+      </div>
+      <Tournaments />
     </div>
   );
 }
