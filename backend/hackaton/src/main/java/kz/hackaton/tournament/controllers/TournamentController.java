@@ -3,6 +3,7 @@ package kz.hackaton.tournament.controllers;
 import kz.hackaton.tournament.responses.ResponseMessage;
 import kz.hackaton.tournament.services.TournamentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,6 @@ public class TournamentController {
     @PostMapping("/join")
     public ResponseEntity<ResponseMessage> joinTourney(Principal principal) {
         tournamentService.joinTourney(principal.getName());
-        return new ResponseEntity<>()
+        return new ResponseEntity<>(ResponseMessage.builder().code(200).message("Succesfully added").build(), HttpStatus.OK);
     }
 }
