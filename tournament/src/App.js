@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ActiveTournaments from "./components/activeTournaments";
 import doWeHaveToken from "./components/checkIfAutorized";
 import CreateTournament from "./components/CreateTournament";

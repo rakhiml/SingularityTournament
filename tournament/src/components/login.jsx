@@ -11,6 +11,14 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
+async function getUser() {
+  try {
+    const token = sessionStorage.getItem("token");
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function Login() {
   return (
     <ChakraProvider>
@@ -38,6 +46,24 @@ export default function Login() {
                 const reqJ = await req.json();
                 if (reqJ.token) {
                   sessionStorage.setItem("token", reqJ.token);
+                  const userReq = await fetch(
+                    "http://localhost:8189/api/v1/app/user",
+                    {
+                      method: "GET",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: `Bearer ${reqJ.token}`,
+                      },
+                    }
+                  );
+
+                  const userRes = await userReq.json();
+                  sessionStorage.setItem(
+                    "user",
+                    `${userRes.lastName} ${userRes.firstName}`
+                  );
+                  sessionStorage.setItem("login", `${userRes.login}`);
                   window.location.pathname = "/";
                 } else {
                   alert(reqJ.message);

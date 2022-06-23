@@ -1,4 +1,9 @@
-import { ChakraProvider, useCallbackRef } from "@chakra-ui/react";
+import {
+  Button,
+  ChakraProvider,
+  Checkbox,
+  useCallbackRef,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import isEmpty from "./checkEmpty";
@@ -6,6 +11,9 @@ import doWeHaveToken from "./checkIfAutorized";
 import Header from "./header";
 import ReactLoading from "react-loading";
 import JoinTourney from "./joinTournament";
+import { SelectControl } from "formik-chakra-ui";
+import { Formik } from "formik";
+import WinLose from "./winLose";
 
 async function tournamentDetails(id) {
   const token = sessionStorage.getItem("token");
@@ -22,7 +30,6 @@ async function tournamentDetails(id) {
       }
     );
     const res = await req.json();
-    console.log(res);
     return res;
   } catch {
     console.log("error");
@@ -51,6 +58,8 @@ export default function ActiveTournamentPage() {
   }, []);
 
   if (doWeHaveToken() && !isEmpty(tournamentTable)) {
+    const user = sessionStorage.getItem("user");
+    const login = sessionStorage.getItem("login");
     return (
       <ChakraProvider>
         <Header />
@@ -98,6 +107,41 @@ export default function ActiveTournamentPage() {
                                   </div>
                                   <div className="secondPlayer winner">
                                     {element.username2}
+                                  </div>
+                                </div>
+                              );
+                            }
+                          }
+                          if (user) {
+                            if (user === element.username1) {
+                              return (
+                                <div key={element.login} className="plays">
+                                  <div className="firstPlayer ">
+                                    {element.username1}
+                                    <WinLose
+                                      user={element.username1}
+                                      userOpponent={element.username2}
+                                      login={login}
+                                    />
+                                  </div>
+                                  <div className="secondPlayer">
+                                    {element.username2}
+                                  </div>
+                                </div>
+                              );
+                            } else if (user === element.username2) {
+                              return (
+                                <div key={element.login} className="plays">
+                                  <div className="firstPlayer ">
+                                    {element.username1}
+                                  </div>
+                                  <div className="secondPlayer">
+                                    {element.username2}
+                                    <WinLose
+                                      user={element.username1}
+                                      userOpponent={element.username2}
+                                      login={login}
+                                    />
                                   </div>
                                 </div>
                               );

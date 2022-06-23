@@ -23,7 +23,6 @@ async function tournamentDetails(id) {
       }
     );
     const res = await req.json();
-    console.log(res);
     return res;
   } catch {
     console.log("error");

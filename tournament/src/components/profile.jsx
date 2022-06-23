@@ -1,57 +1,46 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
+import isEmpty from "./checkEmpty";
 import doWeHaveToken from "./checkIfAutorized";
 import Header from "./header";
-
-async function profInfo() {
-  const token = sessionStorage.getItem("token");
-  try {
-    const req = await fetch("profile", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-        // Authorization: `Bearer ${token}`,
-      },
-    });
-    const res = await req.json();
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-}
+import ReactLoading from "react-loading";
 
 // function profInfoImitation() {
 //   return
 // }
 
 export default function Profile() {
-  const test = {
-    name: "Arkhat",
-    surname: "Beibarys",
-    major: "pragramist",
-  };
-  const [profile, setProfile] = useState({});
+  const [user, setUser] = useState();
+  const profile = useCallback(async () => {
+    const token = sessionStorage.getItem("token");
+    const userReq = await fetch("http://localhost:8189/api/v1/app/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  const profileInfo = useCallback(() => {
-    setProfile(test);
+    const userRes = await userReq.json();
+    console.log(userRes);
+    setUser(userRes);
+  });
+  useEffect(() => {
+    profile();
   }, []);
 
-  useEffect(() => {
-    profileInfo();
-  }, [profileInfo]);
-
-  if (doWeHaveToken()) {
+  if (doWeHaveToken() && !isEmpty(user)) {
     return (
       <ChakraProvider>
         <Header />
         <div className="ProfileInfo">
           <div className="ProfilePageTitile">Profile Info</div>
           <div className="ProfileDetails">
-            <div className="ProfileInfoField">Name: {profile.name}</div>
-            <div className="ProfileInfoField">Surname: {profile.surname}</div>
-            <div className="ProfileInfoField">Major: {profile.major}</div>
+            <div className="ProfileInfoField">firstname: {user.firstName}</div>
+            <div className="ProfileInfoField">lastname: {user.lastName}</div>
+            <div className="ProfileInfoField">Major: {user.major}</div>
+            <div className="ProfileInfoField">login: {user.login}</div>
           </div>
         </div>
       </ChakraProvider>
@@ -60,7 +49,7 @@ export default function Profile() {
   return (
     <ChakraProvider>
       <Header />
-      <div className="NotAutorized">NotAutorized</div>
+      <ReactLoading color={"orange"} className="center" />
     </ChakraProvider>
   );
 }
