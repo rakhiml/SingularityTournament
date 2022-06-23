@@ -1,10 +1,7 @@
 package kz.hackaton.tournament.services;
 
 import kz.hackaton.tournament.dto.*;
-import kz.hackaton.tournament.entities.Match;
-import kz.hackaton.tournament.entities.Round;
-import kz.hackaton.tournament.entities.Tournament;
-import kz.hackaton.tournament.entities.User;
+import kz.hackaton.tournament.entities.*;
 import kz.hackaton.tournament.exceptions.TournamentException;
 import kz.hackaton.tournament.repositories.TournamentRepositories;
 import lombok.RequiredArgsConstructor;
@@ -209,9 +206,30 @@ public class TournamentService {
 
     @Transactional
     public void info(InfoDto infoDto, String nameFromLogin) {
-        User userByDto = userService.findUserByLogin(infoDto.getLogin());
+        User userByDto = userService.findUserBySurnameAndName(infoDto.getSurname(), infoDto.getName());
         if(userByDto == null) {
             throw new TournamentException("User not found");
+        }
+        UserProfile userProfile = userByDto.getUserProfile();
+        if(userProfile == null) {
+            userProfile = new UserProfile();
+            List<String> facts = userProfile.getFacts();
+            if(facts == null) {
+                facts = new ArrayList<>();
+                facts.add(infoDto.getFact());
+            }
+
+            List<String> done = userProfile.getDone();
+            if(done == null) {
+                done = new ArrayList<>();
+                done.add(infoDto.getDone());
+            }
+            userProfile.setFacts(facts);
+            userProfile.setDone(done);
+            userProfile.setUser(userByDto);
+            userByDto.setUserProfile(userProfile);
+
+            return;
         }
         userByDto.getUserProfile().getFacts().add(infoDto.getFact());
         userByDto.getUserProfile().getDone().add(infoDto.getDone());
