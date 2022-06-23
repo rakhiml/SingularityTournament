@@ -15,7 +15,7 @@ async function start(id) {
   try {
     const token = sessionStorage.getItem("token");
     const req = await fetch(
-      `http://localhost:8189/api/v1/app/tournament/start/${id}`,
+      `http://localhost:8189/api/v1/app/tournament/start/${id.id}`,
       {
         method: "POST",
         headers: {
@@ -27,7 +27,8 @@ async function start(id) {
       }
     );
     const res = await req.json();
-    console.log(res);
+    alert(res.message);
+    window.location.pathname = "/";
   } catch (error) {
     console.log(error);
   }

@@ -82,7 +82,7 @@ export default function TournamentPage() {
                 );
               })}
             </div>
-            <StartButton />
+            <StartButton id={id} />
           </div>
         </div>
       </ChakraProvider>

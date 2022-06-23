@@ -332,6 +332,8 @@ a {
 }
 .participantsList {
   margin: 0 auto;
+  width: 100%;
+  text-align: center;
 }
 .participantsListTtile {
   margin-top: 15px;
@@ -434,6 +436,7 @@ a {
 .playsBox {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .plays {
   border: 1px solid black;
