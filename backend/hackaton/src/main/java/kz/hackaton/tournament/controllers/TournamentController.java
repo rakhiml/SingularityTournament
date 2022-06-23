@@ -1,6 +1,7 @@
 package kz.hackaton.tournament.controllers;
 
 import kz.hackaton.tournament.dto.CreateTournamentDto;
+import kz.hackaton.tournament.dto.RegisterTourneyDto;
 import kz.hackaton.tournament.dto.WinnerResult;
 import kz.hackaton.tournament.responses.ResponseMessage;
 import kz.hackaton.tournament.services.TournamentService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tournament")
@@ -44,5 +46,13 @@ public class TournamentController {
 
         return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
     }
+
+
+    @GetMapping("/register_tourney/{status}")
+    public  List<RegisterTourneyDto> getRegisterTournament(@PathVariable String status) {
+        return tournamentService.getRegisterTournaments(status);
+
+    }
+
 
 }
