@@ -5,6 +5,7 @@ import kz.hackaton.tournament.entities.Match;
 import kz.hackaton.tournament.entities.Round;
 import kz.hackaton.tournament.entities.Tournament;
 import kz.hackaton.tournament.entities.User;
+import kz.hackaton.tournament.exceptions.TournamentException;
 import kz.hackaton.tournament.repositories.TournamentRepositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,7 +30,11 @@ public class TournamentService {
     @Transactional
     public void joinTourney(String name, Long id) {
         Tournament tournament = tournamentRepositories.findById(id).orElseThrow(() -> new RuntimeException("a"));
+
         User user = userService.findUserByLogin(name);
+        if(tournament.getUsers().contains(user)) {
+            throw new TournamentException("You're already participant");
+        }
         tournament.getUsers().add(user);
        // user.getTournaments().add(tournament);
 
@@ -38,6 +44,10 @@ public class TournamentService {
 
     @Transactional
     public void registerTourney(CreateTournamentDto createTournamentDto, String name) {
+        List<Tournament> tournaments = tournamentRepositories.findByStatus(createTournamentDto.getType());
+        if(tournaments != null) {
+            throw new TournamentException("Tournament " + createTournamentDto.getType() + " already exists");
+        }
         Tournament tournament = new Tournament();
         tournament.setName(createTournamentDto.getName());
         tournament.setType(createTournamentDto.getType());
@@ -73,19 +83,31 @@ public class TournamentService {
 
     @Transactional
     public void winnerResult(WinnerResult winnerResult, String name) {
+
         Long authId = userService.findUserByLogin(name).getId();
         Tournament tournament = tournamentRepositories.findById(winnerResult.getTournamentId()).get();
-        List<Match> matchList = tournament.getRoundList().get(winnerResult.getStage()).getMatchList();
-        Long id = userService.findUserByLogin(winnerResult.getWinnerLogin()).getId();
+        LocalDate startedDate = tournament.getStartedDate();
+        LocalDate now = LocalDate.now();
+        if(ChronoUnit.DAYS.between(now,startedDate)+1 != winnerResult.getStage()) {
+            throw new TournamentException("You cannot change past/future details \n" +
+                    "Days between : " + ChronoUnit.DAYS.between(now,startedDate) + "\n" +
+                    "Stage : " + winnerResult.getStage());
+        }
+        List<Match> matchList = tournament.getRoundList().get(winnerResult.getStage() - 1).getMatchList();
+        User userByLogin = userService.findUserByLogin(winnerResult.getWinnerLogin());
+
         for(Match m : matchList) {
-            if(m.getUser1().equals(id) || m.getUser2().equals(id)) {
+            if(m.getUser1().equals(userByLogin.getId()) || m.getUser2().equals(userByLogin.getId())) {
                 if(m.getUser1().equals(authId) || m.getUser2().equals(authId)) {
-                    m.setWinner(id);
+                    if(m.getWinner() != null) {
+                        throw new TournamentException("Winner already exists");
+                    }
+                    m.setWinner(userByLogin.getId());
                     return;
                 }
             }
         }
-        throw new RuntimeException("Error, Invalid data!");
+        throw new TournamentException("Error, Invalid data!");
 
     }
 
