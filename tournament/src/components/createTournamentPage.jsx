@@ -60,7 +60,7 @@ export default function CreateTournamentPage() {
               {({ handleSubmit, errors, touched }) => (
                 <form onSubmit={handleSubmit}>
                   <VStack spacing={4} align="flex-start">
-                    <FormControl>
+                    <FormControl isInvalid={!!errors.name && touched.name}>
                       <FormLabel htmlFor="name">Name</FormLabel>
                       <Field
                         as={Input}
@@ -68,9 +68,21 @@ export default function CreateTournamentPage() {
                         name="name"
                         type="text"
                         variant="filled"
+                        validate={(value) => {
+                          let error;
+
+                          if (value.length < 1) {
+                            error = "Must be filed";
+                          }
+
+                          return error;
+                        }}
                       />
+                      <FormErrorMessage>{errors.name}</FormErrorMessage>
                     </FormControl>
-                    <FormControl isInvalid={!!errors.name && touched.name}>
+                    <FormControl
+                      isInvalid={!!errors.description && touched.description}
+                    >
                       <FormLabel htmlFor="description">Description</FormLabel>
                       <Field
                         as={Textarea}
