@@ -10,11 +10,7 @@ import isEmpty from "./checkEmpty";
 import doWeHaveToken from "./checkIfAutorized";
 import Header from "./header";
 import ReactLoading from "react-loading";
-import JoinTourney from "./joinTournament";
-import { SelectControl } from "formik-chakra-ui";
-import { Formik } from "formik";
 import WinLose from "./winLose";
-
 async function tournamentDetails(id) {
   const token = sessionStorage.getItem("token");
   try {
@@ -122,6 +118,8 @@ export default function ActiveTournamentPage() {
                                       user={element.username1}
                                       userOpponent={element.username2}
                                       login={login}
+                                      stage={elem.stage}
+                                      tournamentId={id}
                                     />
                                   </div>
                                   <div className="secondPlayer">
@@ -141,6 +139,8 @@ export default function ActiveTournamentPage() {
                                       user={element.username1}
                                       userOpponent={element.username2}
                                       login={login}
+                                      stage={elem.stage}
+                                      tournamentId={id}
                                     />
                                   </div>
                                 </div>
