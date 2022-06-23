@@ -94,7 +94,7 @@ public class TournamentService {
         Tournament tournament = tournamentRepositories.findById(winnerResult.getTournamentId()).get();
         LocalDate startedDate = tournament.getStartedDate();
         LocalDate now = LocalDate.now();
-        if (ChronoUnit.DAYS.between(now, startedDate) + 1 != winnerResult.getStage()) {
+        if (ChronoUnit.DAYS.between(startedDate, now) + 1 != winnerResult.getStage()) {
             throw new TournamentException("You cannot change past/future details \n" +
                     "Days between : " + ChronoUnit.DAYS.between(now, startedDate) + "\n" +
                     "Stage : " + winnerResult.getStage());
@@ -116,21 +116,22 @@ public class TournamentService {
         throw new TournamentException("Error, Invalid data!");
 
     }
+
     @Transactional
     public TournamentBracketDto getDetailsTournamentBracket(Long id) {
         Tournament tournament = tournamentRepositories.findById(id).get();
         TournamentBracketDto tournamentBracketDto = new TournamentBracketDto(tournament.getId(), tournament.getName(), tournament.getType(), tournament.getDescription());
         List<Round> rounds = tournament.getRoundList();
         List<RoundDto> roundDtos = new ArrayList<>();
-        for (Round round  : rounds) {
+        for (Round round : rounds) {
             RoundDto roundDto = new RoundDto(round.getStage());
             List<Match> matchList = round.getMatchList();
             List<MatchDto> matchDtos = new ArrayList<>();
-            for(Match match : matchList) {
+            for (Match match : matchList) {
                 MatchDto matchDto = new MatchDto();
                 matchDto.setUsername1(userService.getUserLogin(match.getUser1()));
                 matchDto.setUsername2(userService.getUserLogin(match.getUser2()));
-                if(match.getWinner() != null) {
+                if (match.getWinner() != null) {
                     matchDto.setWinner(userService.getUserLogin(match.getWinner()));
                 }
                 matchDtos.add(matchDto);
@@ -177,19 +178,28 @@ public class TournamentService {
         return list;
     }
 
+    public List<LeaderBoardDto> getLeaderBoard(Long id) {
+        List<Leaderboard> leaderBoard = tournamentRepositories.getLeaderBoard(id);
+        System.out.println(leaderBoard);
+        return null;
 
+    }
+
+    @Transactional
     public List<Round> generateRound(Tournament tournament) {
         List<User> users = (List<User>) tournament.getUsers();
         Collections.shuffle(users);
         List<Round> roundList = new ArrayList<>();
-        for (int i = 0; i < users.size() - 1; i++) {
+        int userCount = users.size();
+        System.out.printf(users.toString());
+        for (int i = 0; i < userCount - 1; i++) {
             Round round = new Round();
             round.setStage(i + 1);
             List<Match> matchList = new ArrayList<>();
-            for (int j = 0; j < users.size() / 2; j++) {
+            for (int j = 0; j < userCount / 2; j++) {
                 Match match = new Match();
                 match.setUser1(users.get(j).getId());
-                match.setUser2(users.get(j + users.size() / 2).getId());
+                match.setUser2(users.get(userCount - 1 - j).getId());
                 matchService.save(match);
                 matchList.add(match);
 
