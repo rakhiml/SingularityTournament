@@ -2,6 +2,7 @@ package kz.hackaton.tournament.controllers;
 
 import kz.hackaton.tournament.dto.CreateTournamentDto;
 import kz.hackaton.tournament.dto.RegisterTourneyDto;
+import kz.hackaton.tournament.dto.TournamentFullDetailsDto;
 import kz.hackaton.tournament.dto.WinnerResult;
 import kz.hackaton.tournament.responses.ResponseMessage;
 import kz.hackaton.tournament.services.TournamentService;
@@ -48,10 +49,14 @@ public class TournamentController {
     }
 
 
-    @GetMapping("/register_tourney/{status}")
-    public  List<RegisterTourneyDto> getRegisterTournament(@PathVariable String status) {
+    @GetMapping("/tourney/{status}")
+    public  List<RegisterTourneyDto> getTournament(@PathVariable String status) {
         return tournamentService.getRegisterTournaments(status);
+    }
 
+    @GetMapping("/tourney/id/{id}")
+    public  TournamentFullDetailsDto getDetailsTournament(@PathVariable Long id) {
+        return tournamentService.getDetailsTournament(id);
     }
 
 

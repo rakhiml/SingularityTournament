@@ -1,8 +1,6 @@
 package kz.hackaton.tournament.services;
 
-import kz.hackaton.tournament.dto.CreateTournamentDto;
-import kz.hackaton.tournament.dto.RegisterTourneyDto;
-import kz.hackaton.tournament.dto.WinnerResult;
+import kz.hackaton.tournament.dto.*;
 import kz.hackaton.tournament.entities.Match;
 import kz.hackaton.tournament.entities.Round;
 import kz.hackaton.tournament.entities.Tournament;
@@ -15,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -87,6 +86,17 @@ public class TournamentService {
             }
         }
         throw new RuntimeException("Error, Invalid data!");
+
+    }
+
+    public TournamentFullDetailsDto getDetailsTournament(Long id) {
+        Tournament tournament = tournamentRepositories.findById(id).get();
+        TournamentFullDetailsDto tournamentFullDetailsDto = new TournamentFullDetailsDto(tournament.getId(), tournament.getName(),
+                tournament.getType(), tournament.getDescription());
+        List<User> users = (List<User>) tournament.getUsers();
+        List<UserDto> collect = users.stream().map((u) -> new UserDto(u.getLogin(), u.getName(), u.getSurname(), u.getMajor())).collect(Collectors.toList());
+        tournamentFullDetailsDto.setList(collect);
+        return tournamentFullDetailsDto;
 
     }
 
