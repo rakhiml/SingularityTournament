@@ -8,6 +8,7 @@ import kz.hackaton.tournament.entities.User;
 import kz.hackaton.tournament.exceptions.TournamentException;
 import kz.hackaton.tournament.repositories.TournamentRepositories;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,12 +34,11 @@ public class TournamentService {
         Tournament tournament = tournamentRepositories.findById(id).orElseThrow(() -> new RuntimeException("a"));
 
         User user = userService.findUserByLogin(name);
-        if(tournament.getUsers().contains(user)) {
+        if (tournament.getUsers().contains(user)) {
             throw new TournamentException("You're already participant");
         }
         tournament.getUsers().add(user);
-       // user.getTournaments().add(tournament);
-
+        // user.getTournaments().add(tournament);
 
 
     }
@@ -48,7 +48,7 @@ public class TournamentService {
         List<Tournament> tournaments = tournamentRepositories.findAll();
 
         for (Tournament x : tournaments) {
-            if (x.getType().equals(createTournamentDto.getType()))
+            if (x.getType().equals(createTournamentDto.getType()) && !(x.getStatus().equals("completed")))
                 throw new TournamentException("Tournament " + createTournamentDto.getType() + " already exists");
         }
 //        if(tournaments != null) {
@@ -68,7 +68,7 @@ public class TournamentService {
     @Transactional
     public void startTourney(Long id, String login) {
         User userByLogin = userService.findUserByLogin(login);
-        if(!userByLogin.getLogin().equals(login)) {
+        if (!userByLogin.getLogin().equals(login)) {
             System.out.println("ERORRRRRR");
             return;
         }
@@ -94,18 +94,18 @@ public class TournamentService {
         Tournament tournament = tournamentRepositories.findById(winnerResult.getTournamentId()).get();
         LocalDate startedDate = tournament.getStartedDate();
         LocalDate now = LocalDate.now();
-        if(ChronoUnit.DAYS.between(now,startedDate)+1 != winnerResult.getStage()) {
+        if (ChronoUnit.DAYS.between(now, startedDate) + 1 != winnerResult.getStage()) {
             throw new TournamentException("You cannot change past/future details \n" +
-                    "Days between : " + ChronoUnit.DAYS.between(now,startedDate) + "\n" +
+                    "Days between : " + ChronoUnit.DAYS.between(now, startedDate) + "\n" +
                     "Stage : " + winnerResult.getStage());
         }
         List<Match> matchList = tournament.getRoundList().get(winnerResult.getStage() - 1).getMatchList();
         User userByLogin = userService.findUserByLogin(winnerResult.getWinnerLogin());
 
-        for(Match m : matchList) {
-            if(m.getUser1().equals(userByLogin.getId()) || m.getUser2().equals(userByLogin.getId())) {
-                if(m.getUser1().equals(authId) || m.getUser2().equals(authId)) {
-                    if(m.getWinner() != null) {
+        for (Match m : matchList) {
+            if (m.getUser1().equals(userByLogin.getId()) || m.getUser2().equals(userByLogin.getId())) {
+                if (m.getUser1().equals(authId) || m.getUser2().equals(authId)) {
+                    if (m.getWinner() != null) {
                         throw new TournamentException("Winner already exists");
                     }
                     m.setWinner(userByLogin.getId());
@@ -116,12 +116,31 @@ public class TournamentService {
         throw new TournamentException("Error, Invalid data!");
 
     }
-
+    @Transactional
     public TournamentBracketDto getDetailsTournamentBracket(Long id) {
         Tournament tournament = tournamentRepositories.findById(id).get();
         TournamentBracketDto tournamentBracketDto = new TournamentBracketDto(tournament.getId(), tournament.getName(), tournament.getType(), tournament.getDescription());
+        List<Round> rounds = tournament.getRoundList();
+        List<RoundDto> roundDtos = new ArrayList<>();
+        for (Round round  : rounds) {
+            RoundDto roundDto = new RoundDto(round.getStage());
+            List<Match> matchList = round.getMatchList();
+            List<MatchDto> matchDtos = new ArrayList<>();
+            for(Match match : matchList) {
+                MatchDto matchDto = new MatchDto();
+                matchDto.setUsername1(userService.getUserLogin(match.getUser1()));
+                matchDto.setUsername2(userService.getUserLogin(match.getUser2()));
+                if(match.getWinner() != null) {
+                    matchDto.setWinner(userService.getUserLogin(match.getWinner()));
+                }
+                matchDtos.add(matchDto);
+            }
+            roundDto.setMatches(matchDtos);
+            roundDtos.add(roundDto);
+        }
 
-        tournamentBracketDto.setRoundList(tournament.getRoundList());
+        tournamentBracketDto.setRoundList(roundDtos);
+
         return tournamentBracketDto;
     }
 
@@ -139,11 +158,14 @@ public class TournamentService {
     public List<RegisterTourneyDto> getRegisterTournaments(String status) {
 
         List<Tournament> tournaments = tournamentRepositories.findByStatus(status);
-        if(status.equals("started")) {
-
-        }
+        LocalDate localDate = LocalDate.now();
         List<RegisterTourneyDto> list = new ArrayList<>();
-        for(Tournament t : tournaments) {
+        for (Tournament t : tournaments) {
+
+            if (t.getFinishedDate() != null && ChronoUnit.DAYS.between(t.getFinishedDate(), localDate) <= 0) {
+                t.setStatus("completed");
+                continue;
+            }
             RegisterTourneyDto registerTourneyDto = new RegisterTourneyDto();
             registerTourneyDto.setId(t.getId());
             registerTourneyDto.setName(t.getName());
@@ -156,19 +178,18 @@ public class TournamentService {
     }
 
 
-
     public List<Round> generateRound(Tournament tournament) {
         List<User> users = (List<User>) tournament.getUsers();
         Collections.shuffle(users);
         List<Round> roundList = new ArrayList<>();
         for (int i = 0; i < users.size() - 1; i++) {
-             Round round = new Round();
-             round.setStage(i+1);
+            Round round = new Round();
+            round.setStage(i + 1);
             List<Match> matchList = new ArrayList<>();
-            for (int j = 0; j < users.size()/2; j++) {
+            for (int j = 0; j < users.size() / 2; j++) {
                 Match match = new Match();
                 match.setUser1(users.get(j).getId());
-                match.setUser2(users.get(j+users.size()/2).getId());
+                match.setUser2(users.get(j + users.size() / 2).getId());
                 matchService.save(match);
                 matchList.add(match);
 
@@ -185,14 +206,28 @@ public class TournamentService {
 
 
     public List<User> shuffleAlg(List<User> list) {
-        User temp = list.get(list.size()-1);
-        for (int i = list.size()-1; i > 0; i--) {
-            if(i == 1) {
-                list.set(i,temp);
+        User temp = list.get(list.size() - 1);
+        for (int i = list.size() - 1; i > 0; i--) {
+            if (i == 1) {
+                list.set(i, temp);
                 break;
             }
-            list.set(i,list.get(i-1));
+            list.set(i, list.get(i - 1));
         }
         return list;
     }
+
+//    @Transactional
+//    public void getDetailsTournamentLeaderBoard(Long id) {
+//       Tournament tournament = tournamentRepositories.findById(id).orElseThrow(()-> new TournamentException("Tournament has not been found"));
+//       List<User> users = (List<User>) tournament.getUsers();
+//       List<Round> rounds = tournament.getRoundList();
+//
+//       for (Round round : rounds) {
+//            List<Match> matches = round.getMatchList();
+//            for(Match match : matches) {
+//                match.getWinner();
+//            }
+//       }
+//    }
 }

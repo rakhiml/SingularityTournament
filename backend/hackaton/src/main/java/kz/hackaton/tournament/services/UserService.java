@@ -34,6 +34,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByLogin(username).orElseThrow(() -> new UsernameNotFoundException("User not found by " + username));
     }
 
+    public String getUserLogin(Long id) {
+       User user = userRepository.findById(id).get();
+       String name = user.getName();
+       String surname = user.getSurname();
+       return name + " " + surname;
+    }
+
 
 
     public void save(User user) {

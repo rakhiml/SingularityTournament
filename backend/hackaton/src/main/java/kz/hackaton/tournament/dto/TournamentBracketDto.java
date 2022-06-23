@@ -13,7 +13,7 @@ public class TournamentBracketDto {
     private String name;
     private String type;
     private String description;
-    private List<Round> roundList;
+    private List<RoundDto> roundList;
 
     public TournamentBracketDto(Long id, String name, String type, String description) {
         this.id = id;

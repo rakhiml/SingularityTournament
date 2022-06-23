@@ -61,5 +61,12 @@ public class TournamentController {
         return tournamentService.getDetailsTournamentBracket(id);
     }
 
+//    @GetMapping("/tourney/leaderboard/{id}")
+//    public TournamentBracketDto getDetailsTournamentLeaderBoard(@PathVariable Long id) {
+//        return tournamentService.getDetailsTournamentLeaderBoard(id);
+//    }
+
+
+
 
 }
