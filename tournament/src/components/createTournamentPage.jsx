@@ -44,9 +44,13 @@ export default function CreateTournamentPage() {
                       },
                     }
                   );
+                  const res = await req.json();
+
                   if (req.ok) {
                     alert("Tournament added");
                     window.location.pathname = "/";
+                  } else {
+                    alert(res.message);
                   }
                 } catch (error) {
                   console.log(error);

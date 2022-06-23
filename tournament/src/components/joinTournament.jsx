@@ -5,7 +5,7 @@ export default function JoinTourney(id) {
         console.log(id);
         join(id);
       }}
-      className="joinTurney"
+      className="sliding-button right"
     >
       Join
     </button>
@@ -16,7 +16,7 @@ async function join(id) {
   try {
     const token = sessionStorage.getItem("token");
     const req = await fetch(
-      `http://localhost:8189/api/v1/app/tournament/join/${id}`,
+      `http://localhost:8189/api/v1/app/tournament/join/${id.id}`,
       {
         method: "POST",
         headers: {

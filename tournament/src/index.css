@@ -313,6 +313,7 @@ a {
   flex-wrap: wrap;
   height: 100px;
   display: flex;
+  width: 100%;
 
   color: white;
   background-color: black;
@@ -331,13 +332,55 @@ a {
   margin-left: 15px;
 }
 .participantsListTtile {
-  margin-top: 30px;
+  margin-top: 15px;
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 .participant {
   margin-bottom: 10px;
   font-size: 16px;
+}
+
+.sliding-button {
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  position: relative;
+  padding: 15px 30px;
+  border: 1px solid;
+  border-image: linear-gradient(180deg, #fe6637, #fe6637, #fe6637, #fe6637);
+  border-image-slice: 1;
+  margin: 10px 20px;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  overflow: hidden;
+  letter-spacing: 2px;
+  transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.sliding-button:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0;
+  width: 100%;
+  z-index: -1;
+  color: black;
+  background: linear-gradient(90deg, #fe6637, #fe6637, #fe6637, #fe6637);
+  transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.sliding-button:hover {
+  background: rgba(255, 255, 255, 0);
+}
+.sliding-button:hover:before {
+  bottom: 0%;
+  top: auto;
+  height: 100%;
+}
+
+.participantsInfoDescr {
+  margin-top: 15px;
+  margin-left: 15px;
 }
 
 @media (max-width: 700px) {
@@ -357,4 +400,22 @@ a {
   .headerUserNav {
     margin-right: 10px;
   }
+}
+
+.right {
+  margin-left: auto;
+}
+
+.participantsElemets {
+  box-shadow: 2px 5px 20px black;
+  margin: 20px auto;
+  padding-bottom: 25px;
+  padding: 15px;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.participantsInfoDescr {
+  width: 100%;
 }

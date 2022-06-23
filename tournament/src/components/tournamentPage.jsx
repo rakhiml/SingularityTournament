@@ -61,17 +61,26 @@ export default function TournamentPage() {
               Game: {tournamentTable.type}
             </div>
           </div>
-          <JoinTourney id={tournamentTable.id} />
-          <div className="participantsList">
-            <div className="participantsListTtile">Participants</div>
-            {tournamentTable.list.map((elem) => {
-              return (
-                <div
-                  key={elem.login}
-                  className="participant"
-                >{`${elem.login} ${elem.lastName} ${elem.firstName} (${elem.major})`}</div>
-              );
-            })}
+          <div className="participantsElemets">
+            <JoinTourney id={tournamentTable.id} />
+
+            <div className="participantsInfoDescr">
+              <div className="participantsListTtile">
+                Tournament Desctiption
+              </div>
+              {tournamentTable.description}
+            </div>
+            <div className="participantsList">
+              <div className="participantsListTtile">Participants</div>
+              {tournamentTable.list.map((elem) => {
+                return (
+                  <div
+                    key={elem.login}
+                    className="participant"
+                  >{`${elem.lastName} ${elem.firstName} (${elem.major})`}</div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </ChakraProvider>
