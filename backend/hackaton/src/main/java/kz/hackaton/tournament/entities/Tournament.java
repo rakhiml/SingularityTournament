@@ -33,7 +33,7 @@ public class Tournament {
     private Collection<User> users;
 
     @OneToMany()
-    @JoinColumn(name = "round_id")
+    @JoinColumn(name = "tournament_id")
     public List<Round> roundList;
 
     @Column(name = "owner_id")
@@ -42,6 +42,9 @@ public class Tournament {
 
     @Column(name = "created_date")
     private LocalDate createdDate;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "started_date")
     private LocalDate startedDate;

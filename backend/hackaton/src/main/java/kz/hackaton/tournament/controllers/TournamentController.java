@@ -1,6 +1,7 @@
 package kz.hackaton.tournament.controllers;
 
 import kz.hackaton.tournament.dto.CreateTournamentDto;
+import kz.hackaton.tournament.dto.WinnerResult;
 import kz.hackaton.tournament.responses.ResponseMessage;
 import kz.hackaton.tournament.services.TournamentService;
 import lombok.RequiredArgsConstructor;
@@ -36,4 +37,12 @@ public class TournamentController {
         tournamentService.startTourney(id,principal.getName());
         return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
     }
+
+    @PostMapping("/result_winner")
+    public ResponseEntity<ResponseMessage> resultWinner(@RequestBody WinnerResult winnerResult, Principal principal) {
+        tournamentService.winnerResult(winnerResult, principal.getName());
+
+        return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
+    }
+
 }

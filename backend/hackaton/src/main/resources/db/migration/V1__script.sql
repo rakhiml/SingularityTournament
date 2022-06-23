@@ -29,8 +29,8 @@ create table round
     id BIGSERIAL NOT NULL primary key,
     tournament_id INTEGER,
     stage int,
-    match_id bigint,
-    foreign key (match_id) references match (id)
+    round_id bigint,
+    foreign key (round_id) references match (id)
 
 
 );
@@ -40,14 +40,15 @@ create TABLE tournaments
     id BIGSERIAL NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
     created_date date not null,
     started_date date,
     finished_date date,
     user_id BIGINT,
-    round_id bigint,
+    tournament_id bigint,
     owner_id bigint,
-    foreign key (round_id) references round (id)
+    foreign key (tournament_id) references round (id)
 
 );
 

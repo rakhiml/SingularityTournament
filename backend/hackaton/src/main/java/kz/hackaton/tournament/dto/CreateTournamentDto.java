@@ -8,5 +8,6 @@ import lombok.Data;
 public class CreateTournamentDto {
     private String name;
     private String type;
+    private String description;
 
 }

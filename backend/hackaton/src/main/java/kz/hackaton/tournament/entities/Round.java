@@ -19,7 +19,7 @@ public class Round {
     private Integer stage;
 
     @OneToMany
-    @JoinColumn(name = "match_id")
+    @JoinColumn(name = "round_id")
     private List<Match> matchList;
 
 
