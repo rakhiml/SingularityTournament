@@ -10,6 +10,7 @@ import kz.hackaton.tournament.repositories.TournamentRepositories;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,6 +46,7 @@ public class TournamentService {
     @Transactional
     public void registerTourney(CreateTournamentDto createTournamentDto, String name) {
         List<Tournament> tournaments = tournamentRepositories.findAll();
+
         for (Tournament x : tournaments) {
             if (x.getType().equals(createTournamentDto.getType()))
                 throw new TournamentException("Tournament " + createTournamentDto.getType() + " already exists");
@@ -115,6 +117,14 @@ public class TournamentService {
 
     }
 
+    public TournamentBracketDto getDetailsTournamentBracket(Long id) {
+        Tournament tournament = tournamentRepositories.findById(id).get();
+        TournamentBracketDto tournamentBracketDto = new TournamentBracketDto(tournament.getId(), tournament.getName(), tournament.getType(), tournament.getDescription());
+
+        tournamentBracketDto.setRoundList(tournament.getRoundList());
+        return tournamentBracketDto;
+    }
+
     public TournamentFullDetailsDto getDetailsTournament(Long id) {
         Tournament tournament = tournamentRepositories.findById(id).get();
         TournamentFullDetailsDto tournamentFullDetailsDto = new TournamentFullDetailsDto(tournament.getId(), tournament.getName(),
@@ -127,7 +137,11 @@ public class TournamentService {
     }
 
     public List<RegisterTourneyDto> getRegisterTournaments(String status) {
+
         List<Tournament> tournaments = tournamentRepositories.findByStatus(status);
+        if(status.equals("started")) {
+
+        }
         List<RegisterTourneyDto> list = new ArrayList<>();
         for(Tournament t : tournaments) {
             RegisterTourneyDto registerTourneyDto = new RegisterTourneyDto();

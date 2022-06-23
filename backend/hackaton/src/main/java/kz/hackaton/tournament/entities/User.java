@@ -40,8 +40,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "tournament_id"))
     private Collection<Tournament> tournaments;
 
-
-
     @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

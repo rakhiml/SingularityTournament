@@ -1,9 +1,6 @@
 package kz.hackaton.tournament.controllers;
 
-import kz.hackaton.tournament.dto.CreateTournamentDto;
-import kz.hackaton.tournament.dto.RegisterTourneyDto;
-import kz.hackaton.tournament.dto.TournamentFullDetailsDto;
-import kz.hackaton.tournament.dto.WinnerResult;
+import kz.hackaton.tournament.dto.*;
 import kz.hackaton.tournament.responses.ResponseMessage;
 import kz.hackaton.tournament.services.TournamentService;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +57,8 @@ public class TournamentController {
     }
 
     @GetMapping("/tourney/bracket/{id}")
-    public  TournamentFullDetailsDto getDetailsTournamentBracket(@PathVariable Long id) {
-        return tournamentService.getDetailsTournament(id);
+    public TournamentBracketDto getDetailsTournamentBracket(@PathVariable Long id) {
+        return tournamentService.getDetailsTournamentBracket(id);
     }
 
 
