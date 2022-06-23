@@ -162,7 +162,7 @@ public class TournamentService {
         List<RegisterTourneyDto> list = new ArrayList<>();
         for (Tournament t : tournaments) {
 
-            if (t.getFinishedDate() != null && ChronoUnit.DAYS.between(t.getFinishedDate(), localDate) <= 0) {
+            if (t.getFinishedDate() != null && ChronoUnit.DAYS.between(localDate, t.getFinishedDate()) <= 0) {
                 t.setStatus("completed");
                 continue;
             }
