@@ -129,3 +129,9 @@ body {
   text-decoration: none;
   color: black;
 }
+
+.NotAutorized {
+  font-size: 40px;
+  text-align: center;
+  margin-top: 40px;
+}

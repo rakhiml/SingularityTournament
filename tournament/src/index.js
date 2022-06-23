@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/login";
 import Registration from "./components/registration";
 import CreateTournamentPage from "./components/createTournamentPage";
+import Profile from "./components/profile";
+import { ChakraProvider } from "@chakra-ui/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,6 +21,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/createTournament" element={<CreateTournamentPage />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   </React.StrictMode>

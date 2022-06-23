@@ -43,7 +43,7 @@ export default function Tournaments() {
       <div className="tournamentList">
         {tournament.map((elem) => {
           return (
-            <div className="tournamentInfo">
+            <div className="tournamentInfo" key={elem.name}>
               <div className="tournamentName">{elem.name}</div>
               <div className="tournamentDescription">{elem.description}</div>
               <div className="tournamentPlayers">

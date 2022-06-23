@@ -38,8 +38,9 @@ export default function Registration() {
                     },
                   }
                 );
-                const reqJ = await req.json();
-                console.log(reqJ);
+                if (req.status === "ok") {
+                  window.location.pathname = "/login";
+                }
               } catch (error) {
                 console.log(error);
               }

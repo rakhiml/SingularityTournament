@@ -3,7 +3,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -30,14 +29,14 @@ export default function Login() {
                     method: "POST",
                     body: JSON.stringify(values, null, 2),
                     headers: {
-                      "Access-Control-Allow-Origin": "http://localhost:8189",
                       "Content-Type": "application/json",
                       Accept: "application/json",
                     },
                   }
                 );
                 const reqJ = await req.json();
-                console.log(reqJ);
+                sessionStorage.setItem("token", reqJ);
+                window.location.pathname = "/";
               } catch (error) {
                 console.log(error);
               }
