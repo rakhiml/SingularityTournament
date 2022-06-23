@@ -1,11 +1,17 @@
 package kz.hackaton.tournament.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "tournaments")
 public class Tournament {
     @Id
@@ -26,6 +32,14 @@ public class Tournament {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Collection<User> users;
 
+    @OneToMany()
+    @JoinColumn(name = "round_id")
+    public List<Round> roundList;
+
+    @Column(name = "owner_id")
+    private Long owner;
+
+
     @Column(name = "created_date")
     private LocalDate createdDate;
 
@@ -38,67 +52,5 @@ public class Tournament {
     @Column(name = "status")
     private String status;
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
-    }
 
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDate getStartedDate() {
-        return startedDate;
-    }
-
-    public void setStartedDate(LocalDate startedDate) {
-        this.startedDate = startedDate;
-    }
-
-    public LocalDate getFinishedDate() {
-        return finishedDate;
-    }
-
-    public void setFinishedDate(LocalDate finishedDate) {
-        this.finishedDate = finishedDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

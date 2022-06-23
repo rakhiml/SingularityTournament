@@ -26,7 +26,14 @@ public class TournamentController {
     @PostMapping("/create")
     public ResponseEntity<ResponseMessage> createTourney(@RequestBody CreateTournamentDto createTournamentDto, Principal principal) {
 
-        tournamentService.registerTourney(createTournamentDto);
+        tournamentService.registerTourney(createTournamentDto, principal.getName());
+        return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
+    }
+
+    @PostMapping("/start/{id}")
+    public ResponseEntity<ResponseMessage> startTourney(@PathVariable(name = "id") Long id, Principal principal) {
+
+        tournamentService.startTourney(id,principal.getName());
         return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
     }
 }

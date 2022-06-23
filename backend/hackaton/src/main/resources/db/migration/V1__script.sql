@@ -13,6 +13,27 @@ create TABLE users
     tournament_id BIGINT
 
 );
+create table match
+(
+    id BIGSERIAL NOT NULL primary key,
+    tournament_id INTEGER,
+    user_id1 BIGINT,
+    user_id2 BIGINT,
+    winner bigint
+
+);
+
+
+create table round
+(
+    id BIGSERIAL NOT NULL primary key,
+    tournament_id INTEGER,
+    stage int,
+    match_id bigint,
+    foreign key (match_id) references match (id)
+
+
+);
 
 create TABLE tournaments
 (
@@ -23,19 +44,17 @@ create TABLE tournaments
     created_date date not null,
     started_date date,
     finished_date date,
-    user_id BIGINT
-
-);
-
-create table tournament_status
-(
-    id BIGSERIAL NOT NULL primary key,
-    tournament_id INTEGER,
-    score integer[],
     user_id BIGINT,
-    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    round_id bigint,
+    owner_id bigint,
+    foreign key (round_id) references round (id)
+
 );
+
+
+
+
+
 
 
 create table roles
@@ -56,12 +75,12 @@ create table users_roles
 
 
 
-create table tournaments_users
-(
-    tournament_id bigint not null,
-    user_id integer not null,
-    primary key (tournament_id, user_id),
-    foreign key (tournament_id) references tournaments (id),
-    foreign key (user_id) references users (id)
-
-);
+-- create table tournaments_users
+-- (
+--     tournament_id bigint not null,
+--     user_id integer not null,
+--     primary key (tournament_id, user_id),
+--     foreign key (tournament_id) references tournaments (id),
+--     foreign key (user_id) references users (id)
+--
+-- );

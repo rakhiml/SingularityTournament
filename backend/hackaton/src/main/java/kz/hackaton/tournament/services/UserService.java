@@ -36,6 +36,10 @@ public class UserService implements UserDetailsService {
 
 
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
 
     @Override
     @Transactional

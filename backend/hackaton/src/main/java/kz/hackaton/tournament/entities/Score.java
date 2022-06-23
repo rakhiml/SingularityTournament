@@ -1,18 +1,18 @@
 package kz.hackaton.tournament.entities;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
-@Data
-@Table(name = "roles")
-public class Role {
+@Table(name = "score")
+public class Score {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    private Scores score;
+
+    private enum Scores {
+        S1, S0;
+    }
 }
+
