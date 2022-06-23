@@ -1,8 +1,9 @@
 package kz.hackaton.tournament.repositories;
 
 import kz.hackaton.tournament.dto.LeaderBoardDto;
-import kz.hackaton.tournament.dto.Leaderboard;
 
+
+import kz.hackaton.tournament.dto.TempLeaderBoardDto;
 import kz.hackaton.tournament.entities.Tournament;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,6 @@ public interface TournamentRepositories extends JpaRepository<Tournament, Long> 
             "join match on match.round_id=round.id\n" +
             "where tournaments.id = :id \n" +
             "GROUP BY match.winner ORDER BY count(match.winner) DESC ", nativeQuery = true)
-    List<Leaderboard> getLeaderBoard(Long id);
+    List<TempLeaderBoardDto> getLeaderBoard(Long id);
 
 }

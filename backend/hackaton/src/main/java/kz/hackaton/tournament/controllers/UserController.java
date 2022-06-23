@@ -13,15 +13,16 @@ import java.security.Principal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(name = "/user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserRepository userRepository;
 
     @GetMapping
-    public User getUser(Principal principal) {
-        return userRepository.findUserByLogin(principal.getName()).get();
+    public UserDto getUser(Principal principal) {
+        User user =  userRepository.findUserByLogin(principal.getName()).get();
+        return new UserDto(user.getLogin(), user.getName(), user.getSurname(), user.getMajor());
     }
 
 }

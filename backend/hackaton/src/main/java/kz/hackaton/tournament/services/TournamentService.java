@@ -179,8 +179,10 @@ public class TournamentService {
     }
 
     public List<LeaderBoardDto> getLeaderBoard(Long id) {
-        List<Leaderboard> leaderBoard = tournamentRepositories.getLeaderBoard(id);
-        System.out.println(leaderBoard);
+        List<TempLeaderBoardDto> l = tournamentRepositories.getLeaderBoard(id);
+
+
+        System.out.println(l.get(0));
         return null;
 
     }
