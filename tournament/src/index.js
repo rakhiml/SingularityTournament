@@ -9,9 +9,9 @@ import Login from "./components/login";
 import Registration from "./components/registration";
 import CreateTournamentPage from "./components/createTournamentPage";
 import Profile from "./components/profile";
-import { ChakraProvider } from "@chakra-ui/react";
 import TournamentPage from "./components/tournamentPage";
 import ServerError from "./components/500";
+import ActiveTournamentPage from "./components/activeTournamentsPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -25,6 +25,7 @@ root.render(
         <Route path="/createTournament" element={<CreateTournamentPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/tournament/:id" element={<TournamentPage />} />
+        <Route path="/active/:id" element={<ActiveTournamentPage />} />
         <Route path="/500" element={<ServerError />} />
       </Routes>
     </Router>

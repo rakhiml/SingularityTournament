@@ -55,7 +55,7 @@ export default function ActiveTournaments() {
         {tournament.map((elem) => {
           return (
             <div className="tournamentInfo" key={elem.name}>
-              <a href={`/tournament/${elem.id}`}>
+              <a href={`/active/${elem.id}`}>
                 <div className="tournamentName">{elem.name}</div>
                 <div className="tournamentGame">{elem.type}</div>
                 <div className="tournamentDescription">{elem.description}</div>
