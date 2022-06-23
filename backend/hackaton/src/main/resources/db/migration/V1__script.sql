@@ -2,6 +2,15 @@ drop table if exists users;
 drop table if exists tournaments;
 drop table if exists users_roles;
 drop table if exists roles;
+
+create TABLE user_profile
+(
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    facts text[],
+    done text[]
+);
+
+
 create TABLE users
 (
     id BIGSERIAL NOT NULL PRIMARY KEY,
@@ -10,9 +19,14 @@ create TABLE users
     surname VARCHAR(255)  NOT NULL,
     major VARCHAR(255)  NOT NULL,
     password VARCHAR(255) NOT NULL,
-    tournament_id BIGINT
+    tournament_id BIGINT,
+    user_profiles_id BIGINT,
+    foreign key (user_profiles_id) references user_profile (id)
 
 );
+
+
+
 create table match
 (
     id BIGSERIAL NOT NULL primary key,

@@ -90,7 +90,9 @@ public class TournamentService {
     @Transactional
     public void winnerResult(WinnerResult winnerResult, String name) {
 
-        Long authId = userService.findUserByLogin(name).getId();
+        User userFromLogin = userService.findUserByLogin(name);
+        User userFromDto = userService.findUserBySurnameAndName(winnerResult.getSurname(), winnerResult.getName());
+
         Tournament tournament = tournamentRepositories.findById(winnerResult.getTournamentId()).get();
         LocalDate startedDate = tournament.getStartedDate();
         LocalDate now = LocalDate.now();
@@ -100,15 +102,16 @@ public class TournamentService {
                     "Stage : " + winnerResult.getStage());
         }
         List<Match> matchList = tournament.getRoundList().get(winnerResult.getStage() - 1).getMatchList();
-        User userByLogin = userService.findUserByLogin(winnerResult.getWinnerLogin());
+
 
         for (Match m : matchList) {
-            if (m.getUser1().equals(userByLogin.getId()) || m.getUser2().equals(userByLogin.getId())) {
-                if (m.getUser1().equals(authId) || m.getUser2().equals(authId)) {
+            if (m.getUser1().equals(userFromDto.getId()) || m.getUser2().equals(userFromDto.getId())) {
+                if (m.getUser1().equals(userFromLogin.getId()) || m.getUser2().equals(userFromLogin.getId())) {
                     if (m.getWinner() != null) {
+
                         throw new TournamentException("Winner already exists");
                     }
-                    m.setWinner(userByLogin.getId());
+                    m.setWinner(userFromDto.getId());
                     return;
                 }
             }
@@ -202,6 +205,16 @@ public class TournamentService {
 
         return leaderBoardDtoList;
 
+    }
+
+    @Transactional
+    public void info(InfoDto infoDto, String nameFromLogin) {
+        User userByDto = userService.findUserByLogin(infoDto.getLogin());
+        if(userByDto == null) {
+            throw new TournamentException("User not found");
+        }
+        userByDto.getUserProfile().getFacts().add(infoDto.getFact());
+        userByDto.getUserProfile().getDone().add(infoDto.getDone());
     }
 
     @Transactional

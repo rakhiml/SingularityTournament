@@ -67,6 +67,13 @@ public class TournamentController {
         return tournamentService.getLeaderBoard(id);
     }
 
+    @PostMapping("/info")
+    public ResponseEntity<ResponseMessage> info(@RequestBody InfoDto infoDto, Principal principal) {
+        tournamentService.info(infoDto, principal.getName());
+
+        return new ResponseEntity<>(ResponseMessage.builder().statusCode(200).message("Succesfully added").build(), HttpStatus.OK);
+    }
+
 //    @GetMapping("/tourney/leaderboard/{id}")
 //    public TournamentBracketDto getDetailsTournamentLeaderBoard(@PathVariable Long id) {
 //        return tournamentService.getDetailsTournamentLeaderBoard(id);

@@ -11,6 +11,7 @@ public class WinnerResult {
 
     private int stage;
 
-    private String winnerLogin;
+    private String name;
+    private String surname;
 
 }

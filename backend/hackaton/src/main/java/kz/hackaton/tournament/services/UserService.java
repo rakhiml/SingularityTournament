@@ -45,6 +45,10 @@ public class UserService implements UserDetailsService {
        return name + " " + surname;
     }
 
+    public User findUserBySurnameAndName(String surname, String name){
+      return   userRepository.findUserBySurnameAndName(surname, name);
+    }
+
 
 
     public void save(User user) {
