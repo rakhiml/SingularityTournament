@@ -44,10 +44,14 @@ public class TournamentService {
 
     @Transactional
     public void registerTourney(CreateTournamentDto createTournamentDto, String name) {
-        List<Tournament> tournaments = tournamentRepositories.findByStatus(createTournamentDto.getType());
-        if(tournaments != null) {
-            throw new TournamentException("Tournament " + createTournamentDto.getType() + " already exists");
+        List<Tournament> tournaments = tournamentRepositories.findAll();
+        for (Tournament x : tournaments) {
+            if (x.getType().equals(createTournamentDto.getType()))
+                throw new TournamentException("Tournament " + createTournamentDto.getType() + " already exists");
         }
+//        if(tournaments != null) {
+//            throw new TournamentException("Tournament " + createTournamentDto.getType() + " already exists");
+//        }
         Tournament tournament = new Tournament();
         tournament.setName(createTournamentDto.getName());
         tournament.setType(createTournamentDto.getType());

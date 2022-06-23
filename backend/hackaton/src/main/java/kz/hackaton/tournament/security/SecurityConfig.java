@@ -3,6 +3,7 @@ package kz.hackaton.tournament.security;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().and().csrf().disable()
 
                 .authorizeRequests()
-                .antMatchers("/accounts/**").authenticated()
+                .antMatchers(HttpMethod.GET,"/tournament/tourney/**").permitAll() //TODO
+                .antMatchers("/tournament/**").authenticated()
                 .antMatchers("/users/**").authenticated()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
