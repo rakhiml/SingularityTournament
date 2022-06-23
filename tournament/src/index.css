@@ -7,6 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .autorizationNavElemes {
   width: 100%;
   height: 60px;
@@ -84,6 +89,7 @@ body {
 }
 .tournamentList {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .tournamentInfo {
@@ -98,6 +104,9 @@ body {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 20px;
+}
+.tournamentGame {
+  text-align: center;
 }
 
 .tournamentDescription {
@@ -134,4 +143,29 @@ body {
   font-size: 40px;
   text-align: center;
   margin-top: 40px;
+}
+
+.ProfilePageTitile {
+  background-color: #272a33;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+}
+
+.ProfileInfo {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.ProfileDetails {
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: 160px;
+  margin-top: 50px;
+}
+
+.ProfileInfoField {
+  width: 150px;
+  display: block;
 }

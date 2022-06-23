@@ -11,9 +11,18 @@ function isEmpty(obj) {
 export default function Tournaments() {
   const stournament = [
     {
-      name: "My tournament",
-      description: "My description",
+      name: "Турнир от Архата",
+      game: "fifa",
+      description: "Участвовать можно до вторника , победителю шоколода",
       playersCount: "20",
+      id: "1",
+    },
+    {
+      name: "MOR",
+      game: "Mk",
+      description: "My description",
+      playersCount: "2",
+      id: "2",
     },
   ];
   const emptyData = {};
@@ -43,17 +52,20 @@ export default function Tournaments() {
       <div className="tournamentList">
         {tournament.map((elem) => {
           return (
-            <div className="tournamentInfo" key={elem.name}>
-              <div className="tournamentName">{elem.name}</div>
-              <div className="tournamentDescription">{elem.description}</div>
-              <div className="tournamentPlayers">
-                <img
-                  src="https://png.pngtree.com/png-vector/20191017/ourlarge/pngtree-gamepad-icon-png-image_1821905.jpg"
-                  width={25}
-                  alt="Players"
-                />{" "}
-                {elem.playersCount}
-              </div>
+            <div className="tournamentInfo">
+              <a href={`/tournament/${elem.id}`} key={elem.name}>
+                <div className="tournamentName">{elem.name}</div>
+                <div className="tournamentGame">{elem.game}</div>
+                <div className="tournamentDescription">{elem.description}</div>
+                <div className="tournamentPlayers">
+                  <img
+                    src="https://png.pngtree.com/png-vector/20191017/ourlarge/pngtree-gamepad-icon-png-image_1821905.jpg"
+                    width={25}
+                    alt="Players"
+                  />{" "}
+                  {elem.playersCount}
+                </div>
+              </a>
             </div>
           );
         })}

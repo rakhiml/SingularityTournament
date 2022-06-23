@@ -35,6 +35,7 @@ export default function Registration() {
                     headers: {
                       "Content-Type": "application/json",
                       Accept: "application/json",
+                      "Access-Control-Allow-Origin": "*",
                     },
                   }
                 );

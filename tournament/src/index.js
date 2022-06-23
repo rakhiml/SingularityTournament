@@ -10,6 +10,7 @@ import Registration from "./components/registration";
 import CreateTournamentPage from "./components/createTournamentPage";
 import Profile from "./components/profile";
 import { ChakraProvider } from "@chakra-ui/react";
+import TournamentPage from "./components/tournamentPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +23,7 @@ root.render(
         <Route path="/registration" element={<Registration />} />
         <Route path="/createTournament" element={<CreateTournamentPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/tournament/:id" element={<TournamentPage />} />
       </Routes>
     </Router>
   </React.StrictMode>
