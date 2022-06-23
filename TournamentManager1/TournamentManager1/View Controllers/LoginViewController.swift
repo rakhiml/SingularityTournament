@@ -9,6 +9,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
+    private let networkManager: NetworkManagerAF = .shared
+    
     @IBOutlet var loginTextField: UITextField!
     
     @IBOutlet var passwordTextField: UITextField!
@@ -26,30 +28,29 @@ class LoginViewController: UIViewController {
     func setUpElements() {
         
         errorLabel.alpha = 0
-        
-//        Utilities.styleTextField(loginTextField)
-//        Utilities.styleTextField(passwordTextField)
         Utilities.styleFilledButton(loginButton)
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-        let login = loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let username = loginTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        guard let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         
-//        Auth.auth().signIn(withlogin: login, password: password) { (result, error) in
-//
-//            is error != nil {
-//
-//                self.errorLabel.text = error!.localizedDescription
-//                self.errorLabel.alpha = 1
-//
-//            } else {
-                
-                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.homeViewController) as? MainViewController
+        
+        let login = PersonLogin(login: username, password: password)
+        
+        networkManager.postLogin(credentials: login) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(message):
+                // some toastview to show that user is registered
+                let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as? MainViewController
                 
                 self.view.window?.rootViewController = homeViewController
                 self.view.window?.makeKeyAndVisible()
-//            }
-//        }
+                print("123")
+            case let .failure(error):
+                print("456")
+            }
+        }
     }
 }
