@@ -39,10 +39,13 @@ export default function Registration() {
                     },
                   }
                 );
-                if (req.status === "ok") {
+                const res = await req.json();
+                console.log(res);
+                if (res.statusCode === "OK") {
                   window.location.pathname = "/login";
                 }
               } catch (error) {
+                window.location.pathname = "/500";
                 console.log(error);
               }
             }}

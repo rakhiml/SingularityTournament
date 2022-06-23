@@ -11,8 +11,18 @@ export default function Header() {
           />
         </a>
         <div className="headerUserNav">
-          <a href="/profile" className="profileHeader">
+          <a href="/profile" className="double-border-button">
             Profile
+          </a>
+
+          <a
+            href="/"
+            className="double-border-button-blue "
+            onClick={() => {
+              sessionStorage.clear();
+            }}
+          >
+            Log out
           </a>
         </div>
       </div>
@@ -27,10 +37,10 @@ export default function Header() {
         />
       </a>
       <div className="headerUserNav">
-        <a href="/login" className="Login">
+        <a className="double-border-button" href="/login">
           Login
         </a>
-        <a href="/registration" className="SignUp">
+        <a href="/registration" className="double-border-button-blue ">
           Sign up
         </a>
       </div>

@@ -2,9 +2,10 @@
 
 body {
   margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-weight: 500;
 }
 
 a {
@@ -26,6 +27,7 @@ a {
 .Logo {
   margin-left: 30px;
 }
+
 .headerUserNav {
   margin-left: auto;
   margin-right: 50px;
@@ -74,6 +76,15 @@ a {
   margin: 0 auto;
 }
 
+@media (max-width: 700px) {
+  .BodyImage > img {
+    width: 80%;
+  }
+  .hover {
+    display: none;
+  }
+}
+
 .mainPageTitle {
   display: flex;
   width: 100%;
@@ -86,6 +97,7 @@ a {
 
 .mainPageTitle > h2 {
   margin: 0 auto;
+  font-weight: 300;
 }
 .tournamentList {
   display: flex;
@@ -94,19 +106,23 @@ a {
 
 .tournamentInfo {
   width: 70%;
-  box-shadow: 3px 5px 14px black;
-  border-radius: 10px;
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.4);
+  /* border-radius: 3px; */
   margin: 40px auto;
   padding: 20px;
+  background-color: white;
 }
 .tournamentName {
   text-align: center;
   font-size: 18px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid;
 }
 .tournamentGame {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .tournamentDescription {
@@ -129,15 +145,67 @@ a {
 .createTournament {
   display: flex;
 }
+.border-button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 20px 30px;
+  margin: 20px auto 10px auto;
+  position: relative;
+  color: black;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: none;
+  font-weight: 300;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.border-button:before,
+.border-button:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  box-sizing: border-box;
+}
+.border-button:before {
+  bottom: 0;
+  left: 0;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  transition: 0s ease opacity 0.8s, 0.2s ease width 0.4s, 0.2s ease height 0.6s;
+}
+.border-button:after {
+  top: 0;
+  right: 0;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  transition: 0s ease opacity 0.4s, 0.2s ease width, 0.2s ease height 0.2s;
+}
+.border-button:hover:before,
+.border-button:hover:after {
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+}
+.border-button:hover:before {
+  transition: 0s ease opacity 0s, 0.2s ease height, 0.2s ease width 0.2s;
+}
+.border-button:hover:after {
+  transition: 0s ease opacity 0.4s, 0.2s ease height 0.4s, 0.2s ease width 0.6s;
+}
+.border-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
 
-.createTournament > a {
+/* .createTournament > a {
   box-shadow: 1px 2px 3px black;
   padding: 15px;
   margin: 40px auto;
   background-color: #eeeeee;
   text-decoration: none;
   color: black;
-}
+} */
 
 .NotAutorized {
   font-size: 40px;
@@ -168,4 +236,125 @@ a {
 .ProfileInfoField {
   width: 150px;
   display: block;
+}
+
+.double-border-button {
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 20px;
+  padding: 10px 30px;
+  position: relative;
+  border: 2px solid #fe6637;
+  color: #fe6637;
+  font-family: "Montserrat", sans-serif;
+
+  transition: 0.4s;
+}
+.double-border-button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: 0.4s;
+}
+.double-border-button:hover:after {
+  border-color: #fe6637;
+  width: calc(100% - 10px);
+  height: calc(100% + 10px);
+}
+
+.double-border-button-blue {
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 20px;
+  padding: 10px 30px;
+  position: relative;
+  border: 2px solid #0033cc;
+  color: #0033cc;
+  font-family: "Montserrat", sans-serif;
+
+  transition: 0.4s;
+}
+.double-border-button-blue:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid rgba(0, 0, 0, 0);
+  transition: 0.4s;
+}
+.double-border-button-blue:hover:after {
+  border-color: #0033cc;
+  width: calc(100% - 10px);
+  height: calc(100% + 10px);
+}
+
+.ServerError {
+  font-size: 36px;
+  text-align: center;
+  align-items: center;
+}
+.center {
+  margin: 200px auto;
+}
+
+.participantsInfoTitle {
+  flex-wrap: wrap;
+  height: 100px;
+  display: flex;
+
+  color: white;
+  background-color: black;
+}
+.tournayName {
+  width: 100%;
+  display: flex;
+  font-size: 34px;
+  align-items: center;
+  justify-content: center;
+}
+.participantsInfoGame {
+  margin: 0 auto;
+}
+.participantsList {
+  margin-left: 15px;
+}
+.participantsListTtile {
+  margin-top: 30px;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+.participant {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+@media (max-width: 700px) {
+  .Logo > img {
+    width: 150px;
+  }
+  .double-border-button-blue {
+    padding: 5px;
+    font-size: 12px;
+    margin: 5px;
+  }
+  .double-border-button {
+    padding: 5px;
+    font-size: 12px;
+    margin: 5px;
+  }
+  .headerUserNav {
+    margin-right: 10px;
+  }
 }

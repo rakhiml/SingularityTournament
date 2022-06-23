@@ -1,4 +1,4 @@
-import { Formik, Field } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
   Box,
@@ -36,9 +36,15 @@ export default function Login() {
                   }
                 );
                 const reqJ = await req.json();
-                sessionStorage.setItem("token", reqJ);
-                window.location.pathname = "/";
+                if (reqJ.token) {
+                  sessionStorage.setItem("token", reqJ.token);
+                  window.location.pathname = "/";
+                } else {
+                  alert(reqJ.message);
+                }
+                //
               } catch (error) {
+                window.location.pathname = "/500";
                 console.log(error);
               }
             }}
@@ -55,17 +61,7 @@ export default function Login() {
                       name="login"
                       type="login"
                       variant="filled"
-                      //   validate={(value) => {
-                      //     let error;
-                      //     const logRegex = /[а-яА-Я]$/i;
-                      //     if (!logRegex.test(value)) {
-                      //       error = "Фамилия Имя (только на киррилице!)";
-                      //     }
-
-                      //     return error;
-                      //   }}
                     />
-                    {/* <FormErrorMessage>{errors.name}</FormErrorMessage> */}
                   </FormControl>
                   <FormControl
                     isInvalid={!!errors.password && touched.password}

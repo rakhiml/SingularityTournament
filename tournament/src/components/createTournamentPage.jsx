@@ -1,4 +1,4 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Textarea } from "@chakra-ui/react";
 import { Formik, Field } from "formik";
 import {
   Box,
@@ -23,14 +23,16 @@ export default function CreateTournamentPage() {
           <Box bg="white" p={10} rounded="md" w={"80%"}>
             <Formik
               initialValues={{
-                Name: "",
-                Description: "",
-                Game: "",
+                name: "",
+                description: "",
+                type: "",
               }}
               onSubmit={async (values) => {
                 try {
+                  const token = sessionStorage.getItem("token");
+
                   const req = await fetch(
-                    "http://localhost:8189/api/v1/app/register",
+                    "http://localhost:8189/api/v1/app/tournament/create",
                     {
                       method: "POST",
                       body: JSON.stringify(values, null, 2),
@@ -38,11 +40,13 @@ export default function CreateTournamentPage() {
                         "Content-Type": "application/json",
                         Accept: "application/json",
                         "Access-Control-Allow-Origin": "*",
+                        Authorization: `Bearer ${token}`,
                       },
                     }
                   );
-                  if (req.status === "ok") {
-                    window.location.pathname = "/login";
+                  if (req.ok) {
+                    alert("Tournament added");
+                    window.location.pathname = "/";
                   }
                 } catch (error) {
                   console.log(error);
@@ -53,21 +57,21 @@ export default function CreateTournamentPage() {
                 <form onSubmit={handleSubmit}>
                   <VStack spacing={4} align="flex-start">
                     <FormControl>
-                      <FormLabel htmlFor="text">Login</FormLabel>
+                      <FormLabel htmlFor="name">Name</FormLabel>
                       <Field
                         as={Input}
-                        id="Name"
-                        name="Name"
+                        id="name"
+                        name="name"
                         type="text"
                         variant="filled"
                       />
                     </FormControl>
-                    <FormControl isInvalid={!!errors.Name && touched.Name}>
-                      <FormLabel htmlFor="name">Name</FormLabel>
+                    <FormControl isInvalid={!!errors.name && touched.name}>
+                      <FormLabel htmlFor="description">Description</FormLabel>
                       <Field
-                        as={Input}
-                        id="Description"
-                        name="Description"
+                        as={Textarea}
+                        id="description"
+                        name="description"
                         type="text"
                         variant="filled"
                         validate={(value) => {
@@ -80,11 +84,11 @@ export default function CreateTournamentPage() {
                           return error;
                         }}
                       />
-                      <FormErrorMessage>{errors.Description}</FormErrorMessage>
+                      <FormErrorMessage>{errors.description}</FormErrorMessage>
                     </FormControl>
 
                     <SelectControl
-                      name="Game"
+                      name="type"
                       selectProps={{ placeholder: "Select Game" }}
                     >
                       <option value="MortalCombat">MortalCombat</option>

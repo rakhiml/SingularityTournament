@@ -1,36 +1,38 @@
 import { useCallback, useEffect, useState } from "react";
+import isEmpty from "./checkEmpty";
 
-function isEmpty(obj) {
-  for (let key in obj) {
-    // если тело цикла начнет выполняться - значит в объекте есть свойства
-    return false;
+async function tournamentList() {
+  const token = sessionStorage.getItem("token");
+  try {
+    const req = await fetch(
+      "http://localhost:8189/api/v1/app/tournament/tourney/registration",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          // "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const res = await req.json();
+    console.log(res);
+    if (req.status !== 200) {
+      return {};
+    }
+    return res;
+  } catch (error) {
+    console.log(error);
   }
-  return true;
 }
 
 export default function Tournaments() {
-  const stournament = [
-    {
-      name: "Турнир от Архата",
-      game: "fifa",
-      description: "Участвовать можно до вторника , победителю шоколода",
-      playersCount: "20",
-      id: "1",
-    },
-    {
-      name: "MOR",
-      game: "Mk",
-      description: "My description",
-      playersCount: "2",
-      id: "2",
-    },
-  ];
-  const emptyData = {};
   const [isTournament, setisTournament] = useState(false);
   const [tournament, setTournament] = useState([]);
 
   const showTournament = useCallback(async () => {
-    const tournamentInfo = stournament;
+    const tournamentInfo = await tournamentList();
     if (isEmpty(tournamentInfo)) {
       setisTournament(false);
     } else {
@@ -52,10 +54,10 @@ export default function Tournaments() {
       <div className="tournamentList">
         {tournament.map((elem) => {
           return (
-            <div className="tournamentInfo">
-              <a href={`/tournament/${elem.id}`} key={elem.name}>
+            <div className="tournamentInfo" key={elem.name}>
+              <a href={`/tournament/${elem.id}`}>
                 <div className="tournamentName">{elem.name}</div>
-                <div className="tournamentGame">{elem.game}</div>
+                <div className="tournamentGame">{elem.type}</div>
                 <div className="tournamentDescription">{elem.description}</div>
                 <div className="tournamentPlayers">
                   <img
@@ -63,7 +65,7 @@ export default function Tournaments() {
                     width={25}
                     alt="Players"
                   />{" "}
-                  {elem.playersCount}
+                  {elem.participants}
                 </div>
               </a>
             </div>
