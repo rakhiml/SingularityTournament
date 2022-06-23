@@ -105,7 +105,8 @@ a {
 }
 
 .tournamentInfo {
-  width: 70%;
+  width: 80%;
+  max-width: 800px;
   box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.4);
   /* border-radius: 3px; */
   margin: 40px auto;
@@ -330,16 +331,18 @@ a {
   margin: 0 auto;
 }
 .participantsList {
-  margin-left: 15px;
+  margin: 0 auto;
 }
 .participantsListTtile {
   margin-top: 15px;
   font-size: 24px;
+  width: 100%;
   margin-bottom: 15px;
 }
 .participant {
   margin-bottom: 10px;
   font-size: 16px;
+  width: 100%;
 }
 
 .sliding-button {
@@ -382,6 +385,67 @@ a {
 .participantsInfoDescr {
   margin-top: 15px;
   margin-left: 15px;
+}
+
+.closing-button {
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px;
+  color: black;
+  box-shadow: 0 0 0 2px black;
+  padding: 20px 0;
+  width: 150px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  position: relative;
+  overflow: hidden;
+}
+.closing-button span {
+  font-family: "Montserrat", sans-serif;
+  position: relative;
+  z-index: 5;
+}
+.closing-button:before,
+.closing-button:after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+.closing-button:before {
+  transform: translateX(-100%);
+  background: black;
+  transition: transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.closing-button:after {
+  background: #fe6637;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 0.73, 0.58, 0.62) 0.3s;
+}
+.closing-button:hover:before,
+.closing-button:hover:after {
+  transform: translateX(0);
+}
+
+.playsBox {
+  display: flex;
+  flex-wrap: wrap;
+}
+.plays {
+  border: 1px solid black;
+  padding: 5px 30px 5px 5px;
+  margin: 15px;
+  width: 200px;
+}
+.firstPlayer {
+  border-bottom: 1px solid black;
+}
+.winner {
+  background-color: green;
 }
 
 @media (max-width: 700px) {

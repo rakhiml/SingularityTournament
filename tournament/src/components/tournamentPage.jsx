@@ -6,6 +6,7 @@ import doWeHaveToken from "./checkIfAutorized";
 import Header from "./header";
 import ReactLoading from "react-loading";
 import JoinTourney from "./joinTournament";
+import StartButton from "./startButton";
 
 async function tournamentDetails(id) {
   const token = sessionStorage.getItem("token");
@@ -81,6 +82,7 @@ export default function TournamentPage() {
                 );
               })}
             </div>
+            <StartButton />
           </div>
         </div>
       </ChakraProvider>

@@ -1,35 +1,34 @@
-export default function JoinTourney(id) {
+export default function StartButton(id) {
   return (
     <button
       onClick={() => {
-        console.log(id);
-        join(id);
+        start(id);
       }}
-      className="sliding-button right"
+      className="closing-button"
     >
-      Join
+      <span>Start</span>
     </button>
   );
 }
 
-async function join(id) {
+async function start(id) {
   try {
     const token = sessionStorage.getItem("token");
     const req = await fetch(
-      `http://localhost:8189/api/v1/app/tournament/join/${id.id}`,
+      `http://localhost:8189/api/v1/app/tournament/start/${id}`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
           Accept: "application/json",
+          // "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
     const res = await req.json();
-    alert(res.message);
-    window.location.reload();
-  } catch {
-    console.log("error");
+    console.log(res);
+  } catch (error) {
+    console.log(error);
   }
 }

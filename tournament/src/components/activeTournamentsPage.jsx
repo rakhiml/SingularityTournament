@@ -69,14 +69,53 @@ export default function ActiveTournamentPage() {
               {tournamentTable.description}
             </div>
             <div className="participantsList">
-              <div className="participantsListTtile">
-                Tournament Round {tournamentTable.roundList[0].stage}
-              </div>
-              {tournamentTable.roundList[0].matchList.map((elem) => {
+              {tournamentTable.roundList.map((elem) => {
                 return (
-                  <div key={elem.login} className="plays">
-                    <div className="firstPlayer">{elem.user1}</div>
-                    <div className="secondPlayer">{elem.user2}</div>
+                  <div className="item">
+                    <div className="participantsListTtile">
+                      Tournament Round {elem.stage}
+                    </div>
+                    <div className="playsBox">
+                      {elem.matches.map((element) => {
+                        {
+                          if (element.winner) {
+                            if (element.winner === element.username1) {
+                              return (
+                                <div key={element.login} className="plays">
+                                  <div className="firstPlayer winner">
+                                    {element.username1}
+                                  </div>
+                                  <div className="secondPlayer">
+                                    {element.username2}
+                                  </div>
+                                </div>
+                              );
+                            } else {
+                              return (
+                                <div key={element.login} className="plays">
+                                  <div className="firstPlayer ">
+                                    {element.username1}
+                                  </div>
+                                  <div className="secondPlayer winner">
+                                    {element.username2}
+                                  </div>
+                                </div>
+                              );
+                            }
+                          }
+                          return (
+                            <div key={element.login} className="plays">
+                              <div className="firstPlayer ">
+                                {element.username1}
+                              </div>
+                              <div className="secondPlayer">
+                                {element.username2}
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+                    </div>
                   </div>
                 );
               })}
