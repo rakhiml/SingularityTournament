@@ -179,11 +179,28 @@ public class TournamentService {
     }
 
     public List<LeaderBoardDto> getLeaderBoard(Long id) {
-        List<TempLeaderBoardDto> l = tournamentRepositories.getLeaderBoard(id);
+        List<TempLeaderBoardDto> list = tournamentRepositories.getLeaderBoard(id);
+        Tournament tournament = tournamentRepositories.findById(id).get();
+        Collection<User> users = tournament.getUsers();
+        List<LeaderBoardDto> leaderBoardDtoList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getWinner() == null) {
+                continue;
+            }
+
+            User user = userService.findById(list.get(i).getWinner());
+            users.remove(user);
+            LeaderBoardDto leaderBoardDto = new LeaderBoardDto(user.getName(), user.getSurname(), list.get(i).getCount());
+            leaderBoardDtoList.add(leaderBoardDto);
+        }
+        for(User u : users) {
+            LeaderBoardDto leaderBoardDto = new LeaderBoardDto(u.getName(), u.getSurname(), 0L);
+            leaderBoardDtoList.add(leaderBoardDto);
+        }
 
 
-        System.out.println(l.get(0));
-        return null;
+
+        return leaderBoardDtoList;
 
     }
 

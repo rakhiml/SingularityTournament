@@ -11,5 +11,5 @@ import lombok.Setter;
 public class LeaderBoardDto {
     private String name;
     private String surname;
-    private Integer score;
+    private Long score;
 }
