@@ -21,13 +21,15 @@ import { Formik, Field } from "formik";
 import React from "react";
 
 async function setWinner(tournamentId, stage, login) {
+  const token = sessionStorage.getItem("token");
   try {
+    const [name, surname] = login.split(" ");
     const values = {
       tournamentId: tournamentId,
       stage: stage.toString(),
-      winnerLogin: login,
+      name: name,
+      surname: surname,
     };
-    console.log(values);
     const reqWinner = await fetch(
       "http://localhost:8189/api/v1/app/tournament/result_winner",
       {
@@ -36,10 +38,12 @@ async function setWinner(tournamentId, stage, login) {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
+    const res = await reqWinner.json();
+    console.log("setWinner", res);
     if (reqWinner.ok) {
       console.log("winner setted");
     }
@@ -48,12 +52,121 @@ async function setWinner(tournamentId, stage, login) {
   }
 }
 
+async function setFacts(user, fact, done) {
+  const token = sessionStorage.getItem("token");
+  const [name, surname] = user.split(" ");
+  const values = {
+    surname: surname,
+    name: name,
+    fact: fact,
+    done: done,
+  };
+  console.log("val", values);
+  try {
+    const req = await fetch(
+      "http://localhost:8189/api/v1/app/tournament/info",
+      {
+        method: "POST",
+        body: JSON.stringify(values, null, 2),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("fa", req);
+    const res = await req.json();
+    console.log("fa", res);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export default function WinLose(user) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  if (!user.haveWinner) {
+    return (
+      <ChakraProvider>
+        <Button onClick={onOpen}>Check</Button>
 
+        <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Round Results</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Formik
+                initialValues={{
+                  login: "",
+                  done: "",
+                  fact: "",
+                  winner: "",
+                  tournamentId: "",
+                }}
+                onSubmit={(values) => {
+                  setWinner(user.tournamentId, user.stage, values.winner);
+                  setFacts(user.userOpponent, values.fact, values.done);
+                }}
+              >
+                {({ handleSubmit, errors, touched }) => (
+                  <form onSubmit={handleSubmit}>
+                    <VStack spacing={4} align="flex-start">
+                      <FormControl isInvalid={!!errors.name && touched.name}>
+                        <FormLabel htmlFor="fact">
+                          Tell something interesting about you opponent
+                        </FormLabel>
+                        <Field
+                          as={Textarea}
+                          id="fact"
+                          name="fact"
+                          type="text"
+                          variant="filled"
+                        />
+                      </FormControl>
+                      <FormControl
+                        isInvalid={!!errors.description && touched.description}
+                      >
+                        <FormLabel htmlFor="done">
+                          What your opponent learned today ?
+                        </FormLabel>
+                        <Field
+                          as={Textarea}
+                          id="done"
+                          name="done"
+                          type="text"
+                          variant="filled"
+                        />
+                      </FormControl>
+
+                      <SelectControl
+                        name="winner"
+                        selectProps={{ placeholder: "Select Winner" }}
+                      >
+                        <option value={`${user.user}`}>{user.user}</option>
+                        <option value={`${user.userOpponent}`}>
+                          {user.userOpponent}
+                        </option>
+                      </SelectControl>
+
+                      <Button type="submit" colorScheme="orange" width="full">
+                        Submit
+                      </Button>
+                    </VStack>
+                  </form>
+                )}
+              </Formik>
+            </ModalBody>
+
+            <ModalFooter></ModalFooter>
+          </ModalContent>
+        </Modal>
+      </ChakraProvider>
+    );
+  }
   return (
     <ChakraProvider>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <Button onClick={onOpen}>Check</Button>
 
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -70,8 +183,8 @@ export default function WinLose(user) {
                 tournamentId: "",
               }}
               onSubmit={(values) => {
-                setWinner(user.tournamentId, user.stage, user.login);
-                console.log("user", user);
+                setFacts(user.userOpponent, values.fact, values.done);
+                console.log("values", values);
               }}
             >
               {({ handleSubmit, errors, touched }) => (
@@ -106,11 +219,8 @@ export default function WinLose(user) {
 
                     <SelectControl
                       name="winner"
-                      selectProps={{ placeholder: "Select Winner" }}
-                    >
-                      <option value="user">{user.user}</option>
-                      <option value="opponent">{user.userOpponent}</option>
-                    </SelectControl>
+                      selectProps={{ placeholder: `Winner is ${user.winner}` }}
+                    ></SelectControl>
 
                     <Button type="submit" colorScheme="orange" width="full">
                       Submit
@@ -119,38 +229,9 @@ export default function WinLose(user) {
                 </form>
               )}
             </Formik>
-            {/* <div className="chooseWinner">
-              <div className="chooseWinnerTitle">Choose Winner</div>
-              <input type="checkbox" id="one" onchange={test} />{" "}
-              {`${user.user}`}
-              <input type="checkbox" id="two" onchange={test} />
-              {`${user.userOpponent}`}
-            </div>
-            <div className="modaleInput">
-              <div className="modaleInputTitle">
-                what new did your opponent learn today?
-              </div>
-              <input
-                placeholder=""
-                style={{ color: "black", border: "1px solid black" }}
-              />
-            </div>
-            <div className="modaleInput">
-              <div className="modaleInputTitle">
-                Tell us a fact about your opponent??
-              </div>
-              <input
-                placeholder=""
-                style={{ color: "black", border: "1px solid black" }}
-              />
-            </div> */}
           </ModalBody>
 
-          <ModalFooter>
-            {/* <Button variantColor="blue" mr={3} onClick={onClose}>
-              Close
-            </Button> */}
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </ChakraProvider>

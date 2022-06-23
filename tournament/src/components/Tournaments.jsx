@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import isEmpty from "./checkEmpty";
+import ReactLoading from "react-loading";
 
 async function tournamentList() {
   const token = sessionStorage.getItem("token");
@@ -75,7 +76,11 @@ export default function Tournaments() {
     );
   }
 
-  return <div className="tournamentInfo">No active tournaments</div>;
+  return (
+    <div className="tournamentInfo">
+      <ReactLoading color={"orange"} className="center" />
+    </div>
+  );
 }
 
 // http://localhost:8189/api/v1/app/auth

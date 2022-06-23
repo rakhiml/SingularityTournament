@@ -84,68 +84,120 @@ export default function ActiveTournamentPage() {
                       {elem.matches.map((element) => {
                         {
                           if (element.winner) {
-                            if (element.winner === element.username1) {
-                              return (
-                                <div key={element.login} className="plays">
-                                  <div className="firstPlayer winner">
-                                    {element.username1}
+                            if (user === element.winner) {
+                              if (element.winner === element.username1) {
+                                return (
+                                  <div className="playsWithBtn">
+                                    <div key={element.login} className="plays">
+                                      <div className="firstPlayer winner">
+                                        {element.username1}
+                                      </div>
+                                      <div className="secondPlayer">
+                                        {element.username2}
+                                      </div>
+                                    </div>
+                                    <WinLose
+                                      user={element.username1}
+                                      userOpponent={element.username2}
+                                      login={login}
+                                      stage={elem.stage}
+                                      tournamentId={id}
+                                      haveWinner={true}
+                                    />
                                   </div>
-                                  <div className="secondPlayer">
-                                    {element.username2}
+                                );
+                              }
+                              if (element.winner === element.username2) {
+                                return (
+                                  <div className="playsWithBtn">
+                                    <div key={element.login} className="plays">
+                                      <div className="firstPlayer ">
+                                        {element.username1}
+                                      </div>
+                                      <div className="secondPlayer winner">
+                                        {element.username2}
+                                      </div>
+                                    </div>
+                                    <WinLose
+                                      user={element.username1}
+                                      userOpponent={element.username2}
+                                      login={login}
+                                      stage={elem.stage}
+                                      tournamentId={id}
+                                      haveWinner={true}
+                                    />
                                   </div>
-                                </div>
-                              );
-                            } else {
-                              return (
-                                <div key={element.login} className="plays">
-                                  <div className="firstPlayer ">
-                                    {element.username1}
-                                  </div>
-                                  <div className="secondPlayer winner">
-                                    {element.username2}
-                                  </div>
-                                </div>
-                              );
+                                );
+                              }
                             }
                           }
-                          if (user) {
-                            if (user === element.username1) {
-                              return (
-                                <div key={element.login} className="plays">
-                                  <div className="firstPlayer ">
-                                    {element.username1}
-                                    <WinLose
-                                      user={element.username1}
-                                      userOpponent={element.username2}
-                                      login={login}
-                                      stage={elem.stage}
-                                      tournamentId={id}
-                                    />
-                                  </div>
-                                  <div className="secondPlayer">
-                                    {element.username2}
-                                  </div>
-                                </div>
-                              );
-                            } else if (user === element.username2) {
-                              return (
+                          if (user === element.username1) {
+                            return (
+                              <div className="playsWithBtn">
                                 <div key={element.login} className="plays">
                                   <div className="firstPlayer ">
                                     {element.username1}
                                   </div>
                                   <div className="secondPlayer">
                                     {element.username2}
-                                    <WinLose
-                                      user={element.username1}
-                                      userOpponent={element.username2}
-                                      login={login}
-                                      stage={elem.stage}
-                                      tournamentId={id}
-                                    />
                                   </div>
                                 </div>
-                              );
-                            }
+                                <WinLose
+                                  user={element.username1}
+                                  userOpponent={element.username2}
+                                  login={login}
+                                  stage={elem.stage}
+                                  tournamentId={id}
+                                  haveWinner={false}
+                                />
+                              </div>
+                            );
+                          }
+                          if (user === element.username2) {
+                            return (
+                              <div className="playsWithBtn">
+                                <div key={element.login} className="plays">
+                                  <div className="firstPlayer ">
+                                    {element.username1}
+                                  </div>
+                                  <div className="secondPlayer">
+                                    {element.username2}
+                                  </div>
+                                </div>
+                                <WinLose
+                                  user={element.username1}
+                                  userOpponent={element.username2}
+                                  login={login}
+                                  stage={elem.stage}
+                                  tournamentId={id}
+                                  haveWinner={false}
+                                />
+                              </div>
+                            );
+                          }
+                          if (element.winner === element.username1) {
+                            return (
+                              <div key={element.login} className="plays">
+                                <div className="firstPlayer winner">
+                                  {element.username1}
+                                </div>
+                                <div className="secondPlayer">
+                                  {element.username2}
+                                </div>
+                              </div>
+                            );
+                          }
+                          if (element.winner === element.username2) {
+                            return (
+                              <div key={element.login} className="plays">
+                                <div className="firstPlayer ">
+                                  {element.username1}
+                                </div>
+                                <div className="secondPlayer winner">
+                                  {element.username2}
+                                </div>
+                              </div>
+                            );
                           }
                           return (
                             <div key={element.login} className="plays">

@@ -11,14 +11,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-async function getUser() {
-  try {
-    const token = sessionStorage.getItem("token");
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 export default function Login() {
   return (
     <ChakraProvider>
@@ -61,7 +53,7 @@ export default function Login() {
                   const userRes = await userReq.json();
                   sessionStorage.setItem(
                     "user",
-                    `${userRes.lastName} ${userRes.firstName}`
+                    `${userRes.firstName} ${userRes.lastName}`
                   );
                   sessionStorage.setItem("login", `${userRes.login}`);
                   window.location.pathname = "/";
