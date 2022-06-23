@@ -143,6 +143,7 @@ a {
 } */
 
 .createTournament {
+  margin-bottom: 15px;
   display: flex;
 }
 .border-button {

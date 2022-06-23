@@ -1,3 +1,4 @@
+import ActiveTournaments from "./components/activeTournaments";
 import doWeHaveToken from "./components/checkIfAutorized";
 import CreateTournament from "./components/CreateTournament";
 import Header from "./components/header";
@@ -21,6 +22,10 @@ function App() {
         </div>
         <CreateTournament />
         <Tournaments />
+        <div className="mainPageTitle">
+          <h2>Active Tournaments</h2>
+        </div>
+        <ActiveTournaments />
       </div>
     );
   }
