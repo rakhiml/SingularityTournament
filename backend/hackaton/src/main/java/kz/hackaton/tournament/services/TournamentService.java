@@ -121,6 +121,8 @@ public class TournamentService {
     public TournamentBracketDto getDetailsTournamentBracket(Long id) {
         Tournament tournament = tournamentRepositories.findById(id).get();
         TournamentBracketDto tournamentBracketDto = new TournamentBracketDto(tournament.getId(), tournament.getName(), tournament.getType(), tournament.getDescription());
+        tournamentBracketDto.setStartedDate(tournament.getStartedDate().toString());
+        tournamentBracketDto.setFinishedDate(tournament.getFinishedDate().toString());
         List<Round> rounds = tournament.getRoundList();
         List<RoundDto> roundDtos = new ArrayList<>();
         for (Round round : rounds) {
