@@ -45,12 +45,13 @@ class LoginViewController: UIViewController {
                 // some toastview to show that user is registered
                 let homeViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController") as? MainViewController
                 
-                self.view.window?.rootViewController = homeViewController
+                self.navigationController?.pushViewController(homeViewController!, animated: true)
                 self.view.window?.makeKeyAndVisible()
                 print("123")
             case let .failure(error):
                 print("456")
             }
+            
         }
     }
 }

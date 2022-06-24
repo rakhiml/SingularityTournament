@@ -9,18 +9,20 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-//    private var networkManager = NetworkManagerAF.shared
+
     
     var safeArea: UILayoutGuide!
     
     @IBOutlet var tableView: UITableView!
     
+    private let networkManager: NetworkManagerAF = .shared
     
-    var tournaments: [Tournament] = [
-        Tournament.init(image: "MortalKombat.jpeg", gameName: "Mortal Combat", description: "Chocolate to the winner", active: false),
-        Tournament.init(image: "FIFA.png", gameName: "FIFA", description: "Chocolate", active: true),
-        Tournament.init(image: "TableTennis.png", gameName: "Table Tennis", description: "Chocolate", active: true)
-    ]
+    var tournaments: [TournamentDetails] = []
+    {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     static var identifier = "ViewController"
 
@@ -34,6 +36,7 @@ class MainViewController: UIViewController {
         title = "Tournaments"
         
         setUpNaviagtion()
+        loadTournaments()
         
     }
     
@@ -75,21 +78,31 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-//        
-//    
-//        vc.cellIndex = indexPath.row
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        vc.tournament = tournaments[indexPath.row]
+        vc.tournamentId = tournaments[indexPath.row].id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 
 extension MainViewController:  AddTournamentDelegate {
-    
-    func addTournament(tournament: Tournament) {
+
+    func addTournament(tournament: TournamentDetails) {
         self.dismiss(animated: true) {
             self.tournaments.append(tournament)
             self.tableView.reloadData()
         }
     }
 }
+
+extension MainViewController {
+    private func loadTournaments() {
+         //network request
+        networkManager.loadTournaments { [weak self] tournaments in
+            self?.tournaments = tournaments
+            self?.loadTournaments()
+        }
+    }
+}
+

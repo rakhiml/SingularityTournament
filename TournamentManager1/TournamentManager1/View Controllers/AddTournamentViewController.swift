@@ -8,10 +8,12 @@
 import UIKit
 
 protocol AddTournamentDelegate: AnyObject {
-    func addTournament(tournament: Tournament)
+    func addTournament(tournament: TournamentDetails)
 }
 
 class AddTournamentViewController: UIViewController {
+    
+    private let networkManager: NetworkManagerAF = .shared
     
     weak var addDelegate: AddTournamentDelegate?
     
@@ -19,7 +21,7 @@ class AddTournamentViewController: UIViewController {
     
     private var chooseTournament: String = ""
     
-    private let tournaments: [String] = ["MortalKombat", "FIFA", "TableTennis"]
+    private let tournaments: [String] = ["MortalCombat", "Fifa", "Tenis","UFC"]
     
     var cellIndex: Int?
     
@@ -68,23 +70,37 @@ class AddTournamentViewController: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
-        guard let tournamentName = tournamentNameField.text, tournamentNameField.hasText else {
-            return
-        }
-        guard let description = descriptionField.text, descriptionField.hasText else {
-            return
-        }
-        let tournament = Tournament(image: chooseTournament + ".jpeg", gameName: tournamentName, description: description, active: true)
-        addDelegate?.addTournament(tournament: tournament)
+
+        guard let tournamentName = tournamentNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        guard let description = descriptionField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         
+        let tournament = TournamentDetails(id: 0, type: tournamentName, status: chooseTournament, description: description, participants: 1)
+        let tourToSend = TournamentDto(name: tournamentName, type: chooseTournament, description: description)
+//        addDelegate?.addTournament(tournament: tournament)
+        
+        
+            
+            networkManager.postTournaments(credentials: tourToSend) { [weak self] result in
+                guard self != nil else { return }
+                switch result {
+                case let .success(message):
+                    // some toastview to show that user is registered
+                    
+                    print("123")
+                case let .failure(error):
+                    print("456")
+                }
+            }
         if let MainViewController = navigationController?.viewControllers
                                                                 .filter(
                                               {$0 is MainViewController})
                                                                 .first {
             navigationController?.popToViewController(MainViewController, animated: true)
-        }
-        
+            
+//                let homeViewController = storyboard?.instantiateViewController(withIdentifier: "MainViewController") as? MainViewController
 
+                view.window?.makeKeyAndVisible()
+        }
     }
 
     // MARK: - Setup Constraints
@@ -111,7 +127,7 @@ class AddTournamentViewController: UIViewController {
         tournamentPickerView.leadingAnchor.constraint(equalTo: tournamentNameField.leadingAnchor).isActive = true
         tournamentPickerView.trailingAnchor.constraint(equalTo: tournamentNameField.trailingAnchor).isActive = true
         tournamentPickerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        tournamentPickerView.transform = CGAffineTransform(scaleX: 1, y: 0.9);
+        tournamentPickerView.transform = CGAffineTransform(scaleX: 1, y: 1);
         
         
         saveButton.leadingAnchor.constraint(equalTo: tournamentNameField.leadingAnchor).isActive = true

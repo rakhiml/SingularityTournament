@@ -89,40 +89,17 @@ class SignUpViewController: UIViewController {
             let register = PersonSignUp(login: login, name: firstname, surname: lastname, major: major, password: password)
             
             networkManager.postRegister(credentials: register) { [weak self] result in
-                guard let self = self else { return }
+                guard self != nil else { return }
                 switch result {
                 case let .success(message):
                     // some toastview to show that user is registered
-                    self.transitionToHome()
+                    self!.transitionToHome()
                     print("123")
                 case let .failure(error):
                     print("456")
                 }
             }
-//            Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-//                // Check for errors
-//                if err != nil {
-//
-//                    // There was an error creating the user
-//                    self.showError("Error creating user")
-//                }
-//                else {
-//
-//                    // User was created successfully, now store the first name and last name
-//                    let db = Firestore.firestore()
-//
-//                    db.collection("users").addDocument(data: ["firstname":firstName, "lastname":lastName, "uid": result!.user.uid ]) { (error) in
-//
-//                        if error != nil {
-//                            // Show error message
-//                            self.showError("Error saving user data")
-//                        }
-//                    }
-//
-                    // Transition to the home screen
-                    
-//                }
-//            }
+            
         }
     }
     
@@ -135,8 +112,6 @@ class SignUpViewController: UIViewController {
         let homeViewController = storyboard?.instantiateViewController(withIdentifier: "MainViewController") as? MainViewController
         
         self.navigationController?.pushViewController(homeViewController!, animated: true)
-        
-//        view.window?.rootViewController = homeViewController
         view.window?.makeKeyAndVisible()
     }
 }

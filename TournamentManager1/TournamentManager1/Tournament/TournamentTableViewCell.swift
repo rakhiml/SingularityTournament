@@ -21,17 +21,18 @@ class TournamentTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    func configure(with tournament: Tournament) {
-        tounamentImageView.image = UIImage(named: "\(String(describing: tournament.image))")
-        nameLabel.text = tournament.gameName
-        
-        if tournament.active == true {
-            activeContainerView.backgroundColor = .systemGreen
-            activeLabel.text = "Active"
-        } else {
-            activeContainerView.backgroundColor = .systemRed
-            activeLabel.text = "Not active"
+    func configure(with tournament: TournamentDetails) {
+        tounamentImageView.image = UIImage(named: "\(tournament.type).jpeg")
+        if (UIImage(named: "\(tournament.type).jpeg") == nil){
+            tounamentImageView.image = UIImage(named: "defaultBanner.jpeg")
         }
+        nameLabel.text = tournament.type
+        
+        activeContainerView.backgroundColor = .systemGreen
+        activeLabel.text = "Active"
+
+
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
