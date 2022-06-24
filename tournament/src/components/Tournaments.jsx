@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import isEmpty from "./checkEmpty";
 
 async function tournamentList() {
-  const token = sessionStorage.getItem("token");
   try {
     const req = await fetch(
       "http://localhost:8189/api/v1/app/tournament/tourney/registration",
@@ -12,7 +11,6 @@ async function tournamentList() {
           "Content-Type": "application/json",
           Accept: "application/json",
           // "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${token}`,
         },
       }
     );
