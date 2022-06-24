@@ -44,6 +44,9 @@ async function setWinner(tournamentId, stage, login) {
     );
     const res = await reqWinner.json();
     console.log("setWinner", res);
+    if (res.statusCode === 406) {
+      alert(res.message);
+    }
     if (reqWinner.ok) {
       alert("winner setted");
       window.location.reload();

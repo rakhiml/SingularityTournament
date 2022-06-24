@@ -30,8 +30,6 @@ export default function LeaderBoard(id) {
     }
   }, [makeReq]);
 
-  console.log(leaderboard);
-
   if (!isEmpty(leaderboard)) {
     return (
       <div className="LeaderBoard">

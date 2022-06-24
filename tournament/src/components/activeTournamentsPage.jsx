@@ -27,6 +27,7 @@ async function tournamentDetails(id) {
       }
     );
     const res = await req.json();
+    console.log("brac", res);
     return res;
   } catch {
     console.log("error");
@@ -68,6 +69,9 @@ export default function ActiveTournamentPage() {
           <div className="participantsElemets">
             <div className="tournayName">
               {tournamentTable.name} ({tournamentTable.type})
+            </div>
+            <div className="tournamentDate">
+              {tournamentTable.startedDate}/{tournamentTable.finishedDate}
             </div>
             <div className="participantsInfoDescr">
               <div className="participantsListTtile">

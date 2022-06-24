@@ -480,6 +480,9 @@ a {
 /* .leaderboardElem {
   display: flex;
 } */
+.tournamentDate {
+  margin: 0 auto;
+}
 
 @media (max-width: 700px) {
   .Logo > img {

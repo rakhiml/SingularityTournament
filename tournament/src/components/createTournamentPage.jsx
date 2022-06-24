@@ -113,6 +113,7 @@ export default function CreateTournamentPage() {
                       <option value="Tenis">Tenis</option>
                       <option value="test">TEST</option>
                       <option value="tesst">TEsST</option>
+                      <option value="aida">aida</option>
                     </SelectControl>
 
                     <Button type="submit" colorScheme="orange" width="full">
