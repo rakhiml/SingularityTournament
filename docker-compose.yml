@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  spring:
+    image: 'spring-postgres'
+    build: .
+    container_name: spring-postgres
+    depends_on:
+      -db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ec2-44-206-89-185.compute-1.amazonaws.com:5432/df7bei5oqt8ouc
+      - SPRING_DATASOURCE_USERNAME=wndobaytuzibvw
+      - SPRING_DATASOURCE_PASSWORD=17bba88b52d94558cddbc8c061745e8c6e82e9be0e08ad922f5d19535329e52a
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+
+  db:
+    image: 'postgres:14-alpine'
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=wndobaytuzibvw
+      - POSTGRES_PASSWORD=17bba88b52d94558cddbc8c061745e8c6e82e9be0e08ad922f5d19535329e52a
+           
