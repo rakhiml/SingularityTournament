@@ -74,21 +74,21 @@ class AddTournamentViewController: UIViewController {
         guard let tournamentName = tournamentNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         guard let description = descriptionField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
         
-        let tournament = TournamentDetails(id: 0, type: tournamentName, status: chooseTournament, description: description, participants: 1)
+//        let tournament = TournamentDetails(id: 0, type: tournamentName, status: chooseTournament, description: description, participants: 1)
         let tourToSend = TournamentDto(name: tournamentName, type: chooseTournament, description: description)
 //        addDelegate?.addTournament(tournament: tournament)
         
-        
-            
             networkManager.postTournaments(credentials: tourToSend) { [weak self] result in
                 guard self != nil else { return }
                 switch result {
                 case let .success(message):
                     // some toastview to show that user is registered
-                    
+                    print(message?.description)
+                    print("Pushed new tournament")
                     print("123")
                 case let .failure(error):
-                    print("456")
+                    print(error.localizedDescription)
+                    
                 }
             }
         if let MainViewController = navigationController?.viewControllers
@@ -96,10 +96,6 @@ class AddTournamentViewController: UIViewController {
                                               {$0 is MainViewController})
                                                                 .first {
             navigationController?.popToViewController(MainViewController, animated: true)
-            
-//                let homeViewController = storyboard?.instantiateViewController(withIdentifier: "MainViewController") as? MainViewController
-
-                view.window?.makeKeyAndVisible()
         }
     }
 

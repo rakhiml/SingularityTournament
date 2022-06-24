@@ -30,6 +30,9 @@ class DetailViewController: UIViewController {
         setUp()
         if let tournament = tournament {
             imageView.image = UIImage(named: "\(tournament.type).jpeg")
+            if (UIImage(named: "\(tournament.type).jpeg") == nil){
+                imageView.image = UIImage(named: "defaultBanner.jpeg")
+            }
             titleLabel.text = tournament.type
             descriptionLabel.text = tournament.description
             title = tournament.type

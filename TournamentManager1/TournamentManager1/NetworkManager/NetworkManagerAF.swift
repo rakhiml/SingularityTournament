@@ -138,7 +138,7 @@ final class NetworkManagerAF {
         guard let url = components.url else {
             return
         }
-        let token:String = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiZXhwIjoxNjU2MDQyMDI5LCJpYXQiOjE2NTYwMzg0Mjl9.lQ8LogZR3uVHr2pj1F6_1a5vGWgfeYC_ZYa1uU2nkjo"
+        let token:String = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWRhIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImV4cCI6MTY1NjA0Njk0MiwiaWF0IjoxNjU2MDQzMzQyfQ.v8IGRJ_oo_SNE7rEReLTrHMyemZAxQCRK4AF-xFkHgk"
         var urlRequest = URLRequest(url: url)
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue("*/*", forHTTPHeaderField: "Accept")
@@ -148,31 +148,46 @@ final class NetworkManagerAF {
         
         
         let task = session.dataTask(with: urlRequest) { data, response, error in
-            guard error == nil else {
-                
-                DispatchQueue.main.async {
-                    completion(.failure(error!))
-                }
-                return
-            }
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(.failure(APINetworkError.dataNotFound))
-                }
-                return
-            }
-            guard let response = response as? HTTPURLResponse, (200 ..< 300) ~= response.statusCode else {
-                DispatchQueue.main.async {
-                    completion(.failure(APINetworkError.httpRequestFailed))
-                }
-                return
-            }
-
-
-            let message = String(data: data, encoding: .utf8)
-            DispatchQueue.main.async {
-                completion(.success(message))
-            }
+            guard
+                let data = data,
+                        let response = response as? HTTPURLResponse,
+                        error == nil
+                    else {                                                               // check for fundamental networking error
+                        print("Select another game or updated token")//print("error", error ?? URLError(.badServerResponse))
+                        return
+                    }
+                    
+                    guard (200 ... 299) ~= response.statusCode else {                    // check for http errors
+                        print("statusCode should be 2xx, but is \(response.statusCode)")
+                        print("response = \(response)")
+                        return
+                    }
+//            guard error == nil else {
+//
+//                DispatchQueue.main.async {
+//                    completion(.failure(error!))
+//                    print("ERROR")
+//                }
+//                return
+//            }
+//            guard let data = data else {
+//                DispatchQueue.main.async {
+//                    completion(.failure(APINetworkError.dataNotFound))
+//                }
+//                return
+//            }
+//            guard let response = response as? HTTPURLResponse, (200 ..< 300) ~= response.statusCode else {
+//                DispatchQueue.main.async {
+//                    completion(.failure(APINetworkError.httpRequestFailed))
+//                }
+//                return
+//            }
+//
+//
+//            let message = String(data: data, encoding: .utf8)
+//            DispatchQueue.main.async {
+//                completion(.success(message))
+//            }
 
         }
         task.resume()

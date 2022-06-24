@@ -31,13 +31,12 @@ class MainViewController: UIViewController {
         
         safeArea = view.layoutMarginsGuide
     
+        loadTournaments()
         tableView.delegate = self
         tableView.dataSource = self
         title = "Tournaments"
         
         setUpNaviagtion()
-        loadTournaments()
-        
     }
     
 
@@ -49,14 +48,14 @@ class MainViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddContact))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddTournament))
     }
 
     // MARK: - Selectors
 
-    @objc func handleAddContact () {
+    @objc func handleAddTournament () {
         let controller = AddTournamentViewController()
-        controller.addDelegate = self
+//        controller.addDelegate = self
         navigationController?.pushViewController(controller, animated: true)
 
     }
@@ -86,15 +85,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension MainViewController:  AddTournamentDelegate {
-
-    func addTournament(tournament: TournamentDetails) {
-        self.dismiss(animated: true) {
-            self.tournaments.append(tournament)
-            self.tableView.reloadData()
-        }
-    }
-}
+//extension MainViewController:  AddTournamentDelegate {
+//
+//    func addTournament(tournament: TournamentDetails) {
+//        self.dismiss(animated: true) {
+//            self.tournaments.append(tournament)
+//            self.tableView.reloadData()
+//        }
+//    }
+//}
 
 extension MainViewController {
     private func loadTournaments() {
