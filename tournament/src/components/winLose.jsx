@@ -43,7 +43,7 @@ async function setWinner(tournamentId, stage, login) {
       }
     );
     const res = await reqWinner.json();
-    console.log("setWinner", res);
+
     if (res.statusCode === 406) {
       alert(res.message);
     }
@@ -79,6 +79,8 @@ async function setFacts(user, fact, done) {
       }
     );
     const res = await req.json();
+    alert(res.message);
+    window.location.reload();
   } catch (err) {
     console.log(err);
   }
@@ -86,7 +88,6 @@ async function setFacts(user, fact, done) {
 
 export default function WinLose(user) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(user);
   if (!user.haveWinner) {
     return (
       <ChakraProvider>
@@ -185,7 +186,7 @@ export default function WinLose(user) {
                 tournamentId: "",
               }}
               onSubmit={(values) => {
-                // setFacts(user.userOpponent, values.fact, values.done);
+                setFacts(user.userOpponent, values.fact, values.done);
               }}
             >
               {({ handleSubmit, errors, touched }) => (
