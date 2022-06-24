@@ -468,6 +468,19 @@ a {
   background-color: green;
 }
 
+.LeaderBoard {
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+.leaderBoardTitle {
+  text-align: center;
+  font-size: 24px;
+}
+/* .leaderboardElem {
+  display: flex;
+} */
+
 @media (max-width: 700px) {
   .Logo > img {
     width: 150px;

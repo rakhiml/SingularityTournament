@@ -11,6 +11,7 @@ import doWeHaveToken from "./checkIfAutorized";
 import Header from "./header";
 import ReactLoading from "react-loading";
 import WinLose from "./winLose";
+import LeaderBoard from "./LeaderBoard";
 async function tournamentDetails(id) {
   const token = sessionStorage.getItem("token");
   try {
@@ -74,9 +75,9 @@ export default function ActiveTournamentPage() {
               </div>
               {tournamentTable.description}
             </div>
-            {/* <div className="leaderBoard">
-              <LeaderBoard/>
-            </div> */}
+            <div className="LeaderBoard">
+              <LeaderBoard id={id} />
+            </div>
             <div className="participantsList">
               {tournamentTable.roundList.map((elem) => {
                 return (
@@ -138,6 +139,28 @@ export default function ActiveTournamentPage() {
                             }
                           }
                           if (user === element.username1) {
+                            if (element.winner === element.username2) {
+                              return (
+                                <div className="playsWithBtn">
+                                  <div key={element.login} className="plays">
+                                    <div className="firstPlayer ">
+                                      {element.username1}
+                                    </div>
+                                    <div className="secondPlayer winner">
+                                      {element.username2}
+                                    </div>
+                                  </div>
+                                  <WinLose
+                                    user={element.username1}
+                                    userOpponent={element.username2}
+                                    login={login}
+                                    stage={elem.stage}
+                                    tournamentId={id}
+                                    haveWinner={true}
+                                  />
+                                </div>
+                              );
+                            }
                             return (
                               <div className="playsWithBtn">
                                 <div key={element.login} className="plays">
@@ -160,6 +183,28 @@ export default function ActiveTournamentPage() {
                             );
                           }
                           if (user === element.username2) {
+                            if (element.winner === element.username1) {
+                              return (
+                                <div className="playsWithBtn">
+                                  <div key={element.login} className="plays">
+                                    <div className="firstPlayer winner">
+                                      {element.username1}
+                                    </div>
+                                    <div className="secondPlayer ">
+                                      {element.username2}
+                                    </div>
+                                  </div>
+                                  <WinLose
+                                    user={element.username1}
+                                    userOpponent={element.username2}
+                                    login={login}
+                                    stage={elem.stage}
+                                    tournamentId={id}
+                                    haveWinner={true}
+                                  />
+                                </div>
+                              );
+                            }
                             return (
                               <div className="playsWithBtn">
                                 <div key={element.login} className="plays">
