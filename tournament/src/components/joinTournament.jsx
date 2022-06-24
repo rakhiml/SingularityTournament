@@ -2,7 +2,6 @@ export default function JoinTourney(id) {
   return (
     <button
       onClick={() => {
-        console.log(id);
         join(id);
       }}
       className="sliding-button right"

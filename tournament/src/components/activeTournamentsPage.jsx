@@ -60,19 +60,23 @@ export default function ActiveTournamentPage() {
       <ChakraProvider>
         <Header />
         <div className="participantsInfo">
-          <div className="participantsInfoTitle">
-            <div className="tournayName">{tournamentTable.name}</div>
-            <div className="participantsInfoGame">
-              Game: {tournamentTable.type}
-            </div>
+          <div className="mainPageTitle">
+            <h2>Active Tournament</h2>
           </div>
+
           <div className="participantsElemets">
+            <div className="tournayName">
+              {tournamentTable.name} ({tournamentTable.type})
+            </div>
             <div className="participantsInfoDescr">
               <div className="participantsListTtile">
                 Tournament Desctiption
               </div>
               {tournamentTable.description}
             </div>
+            {/* <div className="leaderBoard">
+              <LeaderBoard/>
+            </div> */}
             <div className="participantsList">
               {tournamentTable.roundList.map((elem) => {
                 return (
@@ -102,6 +106,7 @@ export default function ActiveTournamentPage() {
                                       login={login}
                                       stage={elem.stage}
                                       tournamentId={id}
+                                      winner={element.username1}
                                       haveWinner={true}
                                     />
                                   </div>
@@ -119,11 +124,12 @@ export default function ActiveTournamentPage() {
                                       </div>
                                     </div>
                                     <WinLose
-                                      user={element.username1}
-                                      userOpponent={element.username2}
+                                      user={element.username2}
+                                      userOpponent={element.username1}
                                       login={login}
                                       stage={elem.stage}
                                       tournamentId={id}
+                                      winner={element.username2}
                                       haveWinner={true}
                                     />
                                   </div>
@@ -165,8 +171,8 @@ export default function ActiveTournamentPage() {
                                   </div>
                                 </div>
                                 <WinLose
-                                  user={element.username1}
-                                  userOpponent={element.username2}
+                                  user={element.username2}
+                                  userOpponent={element.username1}
                                   login={login}
                                   stage={elem.stage}
                                   tournamentId={id}

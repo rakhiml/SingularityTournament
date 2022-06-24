@@ -55,13 +55,15 @@ export default function TournamentPage() {
       <ChakraProvider>
         <Header />
         <div className="participantsInfo">
-          <div className="participantsInfoTitle">
-            <div className="tournayName">{tournamentTable.name}</div>
-            <div className="participantsInfoGame">
-              Game: {tournamentTable.type}
-            </div>
+          <div className="mainPageTitle">
+            <h2>TOURNAMENT</h2>
           </div>
+
           <div className="participantsElemets">
+            <div className="tournayName">
+              {tournamentTable.name} ({tournamentTable.type})
+            </div>
+
             <JoinTourney id={tournamentTable.id} />
 
             <div className="participantsInfoDescr">

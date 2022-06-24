@@ -111,6 +111,8 @@ export default function CreateTournamentPage() {
                       <option value="Fifa">Fifa</option>
                       <option value="UFC">UFC</option>
                       <option value="Tenis">Tenis</option>
+                      <option value="test">TEST</option>
+                      <option value="tesst">TEsST</option>
                     </SelectControl>
 
                     <Button type="submit" colorScheme="orange" width="full">

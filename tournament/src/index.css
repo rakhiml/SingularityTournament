@@ -229,14 +229,21 @@ a {
 }
 
 .ProfileDetails {
-  display: inline-flex;
-  flex-wrap: wrap;
-  width: 160px;
+  /* display: inline-flex;
+  flex-wrap: wrap; */
+  text-align: left;
+  margin-left: 40px;
+  padding: 20px;
+
+  margin-right: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
   margin-top: 50px;
+  font-size: 16px;
 }
 
 .ProfileInfoField {
-  width: 150px;
+  text-align: center;
+  font-size: 24px;
   display: block;
 }
 
@@ -439,13 +446,23 @@ a {
   justify-content: center;
 }
 .plays {
-  border: 1px solid black;
-  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
   margin: 15px;
+  justify-content: center;
   width: 200px;
+  font-size: 18px;
 }
 .firstPlayer {
+  height: 60px;
+  align-items: center;
+  justify-content: center;
   border-bottom: 1px solid black;
+}
+.secondPlayer {
+  height: 60px;
+}
+.playsWithBtn {
+  display: flex;
 }
 .winner {
   background-color: green;

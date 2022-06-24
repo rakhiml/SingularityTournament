@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import isEmpty from "./checkEmpty";
-import ReactLoading from "react-loading";
 
 async function tournamentList() {
   const token = sessionStorage.getItem("token");
@@ -18,7 +17,6 @@ async function tournamentList() {
       }
     );
     const res = await req.json();
-    console.log(res);
     if (req.status !== 200) {
       return {};
     }
@@ -76,11 +74,7 @@ export default function Tournaments() {
     );
   }
 
-  return (
-    <div className="tournamentInfo">
-      <ReactLoading color={"orange"} className="center" />
-    </div>
-  );
+  return <div className="tournamentInfo">No active tournaments</div>;
 }
 
 // http://localhost:8189/api/v1/app/auth

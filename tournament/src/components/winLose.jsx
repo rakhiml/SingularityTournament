@@ -45,7 +45,8 @@ async function setWinner(tournamentId, stage, login) {
     const res = await reqWinner.json();
     console.log("setWinner", res);
     if (reqWinner.ok) {
-      console.log("winner setted");
+      alert("winner setted");
+      window.location.reload();
     }
   } catch (err) {
     console.log(err);
@@ -61,7 +62,6 @@ async function setFacts(user, fact, done) {
     fact: fact,
     done: done,
   };
-  console.log("val", values);
   try {
     const req = await fetch(
       "http://localhost:8189/api/v1/app/tournament/info",
@@ -75,9 +75,7 @@ async function setFacts(user, fact, done) {
         },
       }
     );
-    console.log("fa", req);
     const res = await req.json();
-    console.log("fa", res);
   } catch (err) {
     console.log(err);
   }
@@ -183,8 +181,7 @@ export default function WinLose(user) {
                 tournamentId: "",
               }}
               onSubmit={(values) => {
-                setFacts(user.userOpponent, values.fact, values.done);
-                console.log("values", values);
+                // setFacts(user.userOpponent, values.fact, values.done);
               }}
             >
               {({ handleSubmit, errors, touched }) => (

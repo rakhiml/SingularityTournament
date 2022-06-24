@@ -40,7 +40,6 @@ export default function Registration() {
                   }
                 );
                 const res = await req.json();
-                console.log(res);
                 if (res.statusCode === "OK") {
                   window.location.pathname = "/login";
                 }
