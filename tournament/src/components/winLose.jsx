@@ -86,6 +86,7 @@ async function setFacts(user, fact, done) {
 
 export default function WinLose(user) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(user);
   if (!user.haveWinner) {
     return (
       <ChakraProvider>

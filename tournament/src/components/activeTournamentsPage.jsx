@@ -160,6 +160,7 @@ export default function ActiveTournamentPage() {
                                     login={login}
                                     stage={elem.stage}
                                     tournamentId={id}
+                                    winner={element.username2}
                                     haveWinner={true}
                                   />
                                 </div>
@@ -204,6 +205,7 @@ export default function ActiveTournamentPage() {
                                     login={login}
                                     stage={elem.stage}
                                     tournamentId={id}
+                                    winner={element.username1}
                                     haveWinner={true}
                                   />
                                 </div>
