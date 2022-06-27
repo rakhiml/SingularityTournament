@@ -51,7 +51,8 @@ public class User {
     @JoinColumn(name = "user_profiles_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
-    @OneToMany
+    @OneToMany(mappedBy ="user")
+
     private List<UserFact> userFacts = new ArrayList<>();
 
 

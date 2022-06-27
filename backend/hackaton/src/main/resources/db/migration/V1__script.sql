@@ -88,6 +88,15 @@ create table users_roles
 
 );
 
+create table user_fact
+(
+     id BIGSERIAL not null primary key,
+     fact VARCHAR(255) not null ,
+     learned_material varchar(255),
+     id_of_feedbacker bigint not null ,
+     user_id bigint not null ,
+     foreign key (user_id) references users(id)
+)
 
 
 -- create table tournaments_users
