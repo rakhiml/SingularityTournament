@@ -1,5 +1,5 @@
 server:
-  port: 8189
+  port: ${PORT:8189}
   servlet:
     context-path: /api/v1/app
 #  servlet:
@@ -11,10 +11,8 @@ server:
 
 spring:
   datasource:
-    sslmode: require
-    url: jdbc:postgresql://ec2-44-206-89-185.compute-1.amazonaws.com:5432/df7bei5oqt8ouc
-    username: wndobaytuzibvw
-    password: 17bba88b52d94558cddbc8c061745e8c6e82e9be0e08ad922f5d19535329e52a
+#    sslmode: require
+    url: ${DATABASE_URL}
   jpa:
     show-sql: true
     hibernate:
@@ -25,8 +23,6 @@ spring:
 
   flyway:
     sslmode: required
-    url: jdbc:postgresql://ec2-44-206-89-185.compute-1.amazonaws.com:5432/df7bei5oqt8ouc
-    user: wndobaytuzibvw
-    password: 17bba88b52d94558cddbc8c061745e8c6e82e9be0e08ad922f5d19535329e52a
+    url: ${DATABASE_URL}
     enabled: true
     locations: classpath:db/migrations
