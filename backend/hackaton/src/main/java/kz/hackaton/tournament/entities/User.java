@@ -47,16 +47,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_profiles_id", referencedColumnName = "id")
-    private UserProfile userProfile;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "user_profiles_id", referencedColumnName = "id")
+//    private UserProfile userProfile;
 
-    @OneToMany(mappedBy ="user")
-
+    @OneToMany
+    @JoinColumn(name = "user_fact_id")
     private List<UserFact> userFacts = new ArrayList<>();
-
-
-
 
 
 

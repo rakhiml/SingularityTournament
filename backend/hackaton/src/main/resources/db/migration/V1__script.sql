@@ -3,12 +3,13 @@ drop table if exists tournaments;
 drop table if exists users_roles;
 drop table if exists roles;
 
-create TABLE user_profile
-(
-    id BIGSERIAL NOT NULL PRIMARY KEY,
-    facts text[],
-    done text[]
-);
+--  todo need to delete
+-- create TABLE user_profile
+-- (
+--     id BIGSERIAL NOT NULL PRIMARY KEY,
+--     facts text[],
+--     done text[]
+-- );
 
 
 create TABLE users
@@ -20,8 +21,10 @@ create TABLE users
     major VARCHAR(255)  NOT NULL,
     password VARCHAR(255) NOT NULL,
     tournament_id BIGINT,
-    user_profiles_id BIGINT,
-    foreign key (user_profiles_id) references user_profile (id)
+    user_fact_id BIGINT,
+    foreign key (user_fact_id) references user_fact(id)
+--     user_profiles_id BIGINT,
+--     foreign key (user_profiles_id) references user_profile (id)
 
 );
 
@@ -66,12 +69,6 @@ create TABLE tournaments
 
 );
 
-
-
-
-
-
-
 create table roles
 (
     id   INTEGER     NOT NULL PRIMARY KEY,
@@ -93,18 +90,5 @@ create table user_fact
      id BIGSERIAL not null primary key,
      fact VARCHAR(255) not null ,
      learned_material varchar(255),
-     id_of_feedbacker bigint not null ,
-     user_id bigint not null ,
-     foreign key (user_id) references users(id)
+     id_of_feedbacker bigint not null;
 )
-
-
--- create table tournaments_users
--- (
---     tournament_id bigint not null,
---     user_id integer not null,
---     primary key (tournament_id, user_id),
---     foreign key (tournament_id) references tournaments (id),
---     foreign key (user_id) references users (id)
---
--- );

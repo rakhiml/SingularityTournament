@@ -23,7 +23,7 @@ public class TournamentService {
     private final TournamentRepositories tournamentRepositories;
     private final UserService userService;
     private final RoundService roundService;
-
+    private final UserFactService userFactService;
     private final MatchService matchService;
 
     @Transactional
@@ -207,34 +207,44 @@ public class TournamentService {
     }
 
     @Transactional
-    public void info(InfoDto infoDto, String nameFromLogin) {
-        User userByDto = userService.findUserBySurnameAndName(infoDto.getSurname(), infoDto.getName());
-        if(userByDto == null) {
+    public void info(InfoDto infoDto, String feedbackerLogin) {
+        User user = userService.findUserBySurnameAndName(infoDto.getSurname(), infoDto.getName());
+        if(user == null) {
             throw new TournamentException("User not found");
         }
-        UserProfile userProfile = userByDto.getUserProfile();
-        if(userProfile == null) {
-            userProfile = new UserProfile();
-            List<String> facts = userProfile.getFacts();
-            if(facts == null) {
-                facts = new ArrayList<>();
-                facts.add(infoDto.getFact());
-            }
-
-            List<String> done = userProfile.getDone();
-            if(done == null) {
-                done = new ArrayList<>();
-                done.add(infoDto.getDone());
-            }
-            userProfile.setFacts(facts);
-            userProfile.setDone(done);
-            userProfile.setUser(userByDto);
-            userByDto.setUserProfile(userProfile);
-
-            return;
+        User feedbacker = userService.findUserByLogin(feedbackerLogin);
+        if(feedbacker == null ) {
+            throw  new TournamentException("User not found");
         }
-        userByDto.getUserProfile().getFacts().add(infoDto.getFact());
-        userByDto.getUserProfile().getDone().add(infoDto.getDone());
+        UserFact userFact = new UserFact();
+        userFact.setFact(infoDto.getFact());
+        userFact.setId_of_feedbacker(feedbacker.getId());
+        userFact.setLearnedMaterial(infoDto.getDone());
+        userFactService.save(userFact);
+        user.getUserFacts().add(userFact);
+//        UserProfile userProfile = userByDto.getUserProfile();
+//        if(userProfile == null) {
+//            userProfile = new UserProfile();
+//            List<String> facts = userProfile.getFacts();
+//            if(facts == null) {
+//                facts = new ArrayList<>();
+//                facts.add(infoDto.getFact());
+//            }
+//
+//            List<String> done = userProfile.getDone();
+//            if(done == null) {
+//                done = new ArrayList<>();
+//                done.add(infoDto.getDone());
+//            }
+//            userProfile.setFacts(facts);
+//            userProfile.setDone(done);
+//            userProfile.setUser(userByDto);
+//            userByDto.setUserProfile(userProfile);
+//
+//            return;
+//        }
+//        userByDto.getUserProfile().getFacts().add(infoDto.getFact());
+//        userByDto.getUserProfile().getDone().add(infoDto.getDone());
     }
 
     @Transactional
