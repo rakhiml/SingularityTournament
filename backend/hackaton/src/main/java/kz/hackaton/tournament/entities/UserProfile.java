@@ -29,6 +29,6 @@ public class UserProfile {
     @Column(name = "done",columnDefinition = "text[]")
     private List<String> done;
 
-    @OneToOne(mappedBy = "userProfile")
+    @OneToOne(mappedBy = "user")
     private User user;
 }

@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,6 +51,8 @@ public class User {
     @JoinColumn(name = "user_profiles_id", referencedColumnName = "id")
     private UserProfile userProfile;
 
+    @OneToMany
+    private List<UserFact> userFacts = new ArrayList<>();
 
 
 
